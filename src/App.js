@@ -6,6 +6,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { Link, Route, Routes } from 'react-router-dom';
 import MealPlans from './pages/MealPlans/MealPlans';
 import Home from './pages/Home/Home';
+import RecipesPage from './pages/Recipes/Recipes';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBsGQS4oEvSmDSABqYUTIIi9PXjyW5DH8c",
@@ -39,6 +40,7 @@ function App() {
         <Routes>
           <Route path="/mealplans" element={<MealPlans />} />
           <Route path="/" element={<Home />} />
+          <Route path="/recipes" element={<RecipesPage />} />
         </Routes>
       </header>
     </div>

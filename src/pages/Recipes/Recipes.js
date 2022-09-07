@@ -5,12 +5,15 @@ import Button from '@mui/material/Button';
 
 export default function RecipesPage() {
   return (
-    <RecipeButton/>
+    <div>
+    <h1>Recipes</h1>
+    <RecipeCard/>
+    </div>
   );
 }
 
-export const RecipeButton = () => {
-    
+export function RecipeCard(){
+    return(
       <Button variant="contained">Recipes</Button>
-   
+    );
 }
