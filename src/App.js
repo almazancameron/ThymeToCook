@@ -3,7 +3,9 @@ import './App.css';
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
-import { Router, Route, Switch } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
+import MealPlans from './pages/MealPlans/MealPlans';
+import Home from './pages/Home/Home';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBsGQS4oEvSmDSABqYUTIIi9PXjyW5DH8c",
@@ -34,10 +36,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <button onClick={testAddDoc}>test</button>
+        <Routes>
+          <Route path="/mealplans" element={<MealPlans />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
       </header>
     </div>
   );
