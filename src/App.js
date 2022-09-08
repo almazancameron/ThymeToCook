@@ -1,9 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from "react-router-dom";
+import Signup from "./pages/Signup/Signup";
+import Login from "./pages/Login/Login";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBsGQS4oEvSmDSABqYUTIIi9PXjyW5DH8c",
@@ -12,7 +14,7 @@ const firebaseConfig = {
   storageBucket: "capstone-3-74587.appspot.com",
   messagingSenderId: "346403488737",
   appId: "1:346403488737:web:65927b8a7a1725eb36c8a0",
-  measurementId: "G-1HE4GV7FX5"
+  measurementId: "G-1HE4GV7FX5",
 };
 
 // Initialize Firebase
@@ -22,7 +24,7 @@ const db = getFirestore(app);
 async function testAddDoc() {
   try {
     const docRef = await addDoc(collection(db, "recipes"), {
-      name: 'Pizza'
+      name: "Pizza",
     });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
@@ -33,12 +35,7 @@ async function testAddDoc() {
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <button onClick={testAddDoc}>test</button>
-      </header>
+      <Signup />
     </div>
   );
 }

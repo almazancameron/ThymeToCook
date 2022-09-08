@@ -12,9 +12,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import image from "../../images/signin--image.jpg";
-import GoogleIcon from '@mui/icons-material/Google';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import image from "../../images/signup--image.jpg";
+
 
 function Copyright(props) {
   return (
@@ -36,7 +35,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -80,7 +79,7 @@ export default function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Sign up
             </Typography>
             <Box
               component="form"
@@ -106,11 +105,17 @@ export default function Login() {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                // autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                // autoComplete="current-password"
               />
               <Button
                 type="submit"
@@ -118,32 +123,16 @@ export default function Login() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Sign Up
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
+                <Grid item xs></Grid>
                 <Grid item>
                   <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {"Already have an account? Sign in"}
                   </Link>
                 </Grid>
               </Grid>
-              <Typography variant="h6">
-                <br />
-                OR
-                <br/>
-                <br/>
-              </Typography>
-              <Button
-                variant="contained"
-                startIcon={<GoogleIcon />}
-                endIcon={<ArrowForwardIosIcon />}>
-                Login with Google
-              </Button>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
