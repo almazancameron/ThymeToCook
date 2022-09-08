@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
-import NoBake from "./assets/nobake.jpg";
-import styles from "./Recipes.css"
+import HeartIcon from "./assets/iconheartplus.png";
+import "./Recipes.css";
 import ReadMoreReact from 'read-more-react';
+
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState([])
@@ -33,10 +30,14 @@ export default function RecipesPage() {
       {recipes.map((recipe) => {
         return <RecipeCard key={recipe.id} recipe={recipe} />;
       })}
+      
     </div>
   );
 }
 
+
+/* main recipe card on the page. Click on read more to expand summary.
+click on anywhere else on the card to get the full recipe. */
 const RecipeCard = ({ recipe }) => {
   const { title, image, summary } = recipe;
 
@@ -47,18 +48,19 @@ const RecipeCard = ({ recipe }) => {
 
   return (
   
-    <Card sx={{ maxWidth: 275 }}>
+    <Card className="recipe-card" sx={{ maxWidth: 275 }}>
       <CardContent>
+        <Typography className="recipe-name" sx={{ fontSize: 14 }}>
+          {title}
+        </Typography>
         <CardMedia
-          className="recipe-img"
           component="img"
-          height="194"
+          height="200"
+          width="100%"
           image={image}
           alt={title}
         />
-        <Typography className="recipe-name" sx={{ fontSize: 16 }}>
-          {title}
-        </Typography>
+        
         <Typography className="recipe-description" sx={{ fontSize: 12 }}>
         <ReadMoreReact
                 text={strip(summary)}
@@ -67,6 +69,7 @@ const RecipeCard = ({ recipe }) => {
                 max={maxLength}
                 readMoreText={readMore}/>
         </Typography>
+        <img src={HeartIcon} alt="Add to my recipes"/>
       </CardContent>
     </Card>
   );

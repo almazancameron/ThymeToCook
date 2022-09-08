@@ -2,3 +2,6 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
+.recipe-name {
+text-align: center;
+}
