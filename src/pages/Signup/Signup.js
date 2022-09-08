@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import image from "../../images/signup--image.jpg";
 
+import { signUpAuth } from "../../auth/auth";
 
 function Copyright(props) {
   return (
@@ -36,15 +37,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Signup() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
-
+  signUpAuth();
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -84,8 +77,9 @@ export default function Signup() {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              onSubmit={signUpAuth.handleSubmit}
               sx={{ mt: 1 }}
+              id="signup-form"
             >
               <TextField
                 margin="normal"
@@ -105,17 +99,17 @@ export default function Signup() {
                 label="Password"
                 type="password"
                 id="password"
-                // autoComplete="current-password"
+                autoComplete="off"
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="confirmPassword"
                 label="Confirm Password"
                 type="password"
-                id="confirmPassword"
-                // autoComplete="current-password"
+                id="confirm_password"
+                autoComplete="off"
               />
               <Button
                 type="submit"
