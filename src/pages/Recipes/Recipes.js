@@ -9,6 +9,8 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import NoBake from "./assets/nobake.jpg";
+import styles from "./Recipes.css"
+import ReadMoreReact from 'read-more-react';
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState([])
@@ -16,7 +18,7 @@ export default function RecipesPage() {
     useEffect(() => {
         const getRecipes = async () => {
             try {
-                const list = await axios.get(`https://api.spoonacular.com/recipes/random?number=3&limitLicense=true&apiKey=${process.env.REACT_APP_API_KEY}`)
+                const list = await axios.get(`https://api.spoonacular.com/recipes/random?number=1&limitLicense=true&apiKey=${process.env.REACT_APP_API_KEY}`)
                 setRecipes(list.data.recipes)
             } catch (e) {
                 console.log('ERROR GETTING RECIPES')
@@ -26,8 +28,8 @@ export default function RecipesPage() {
     }, [])
 
   return (
-    <div>
-      <h1>Recipes</h1>
+    <div className="recipes-page">
+      <nav className="recipe-header"><h1>Recipes</h1></nav>
       {recipes.map((recipe) => {
         return <RecipeCard key={recipe.id} recipe={recipe} />;
       })}
@@ -44,6 +46,7 @@ const RecipeCard = ({ recipe }) => {
  }
 
   return (
+  
     <Card sx={{ maxWidth: 275 }}>
       <CardContent>
         <CardMedia
@@ -57,9 +60,19 @@ const RecipeCard = ({ recipe }) => {
           {title}
         </Typography>
         <Typography className="recipe-description" sx={{ fontSize: 12 }}>
-          {strip(summary)}
+        <ReadMoreReact
+                text={strip(summary)}
+                min={minimumLength}
+                ideal={idealLength}
+                max={maxLength}
+                readMoreText={readMore}/>
         </Typography>
       </CardContent>
     </Card>
   );
 };
+
+const minimumLength = 80;
+const idealLength = 100;
+const maxLength = 200;
+const readMore = "Read More...";
