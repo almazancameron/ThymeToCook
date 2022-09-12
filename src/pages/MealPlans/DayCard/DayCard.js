@@ -4,7 +4,7 @@ import MealCard from "./MealCard/MealCard"
 const DayCard = ({meals, date}) => {
     return (
         <Card container>
-            <CardHeader title={`Meals for ${date.toLocaleDateString()}`} />
+            <CardHeader title={`Meals for ${new Date(date.seconds*1000).toLocaleDateString()}`} />
             <CardContent>
                 {meals.map((meal) => {
                     return (

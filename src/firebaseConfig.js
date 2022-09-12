@@ -1,3 +1,8 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyBsGQS4oEvSmDSABqYUTIIi9PXjyW5DH8c",
     authDomain: "capstone-3-74587.firebaseapp.com",
@@ -11,14 +16,3 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-
-async function testAddDoc() {
-    try {
-        const docRef = await addDoc(collection(db, "recipes"), {
-        name: 'Pizza'
-        });
-        console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-        console.error("Error adding document: ", e);
-    }
-}
