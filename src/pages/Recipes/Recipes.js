@@ -56,18 +56,12 @@ const RecipeCard = ({ recipe }) => {
         <CardMedia
           component="img"
           height="200"
-          width="100%"
           image={image}
           alt={title}
         />
         
         <Typography className="recipe-description" sx={{ fontSize: 12 }}>
-        <ReadMoreReact
-                text={strip(summary)}
-                min={minimumLength}
-                ideal={idealLength}
-                max={maxLength}
-                readMoreText={readMore}/>
+          {strip(summary)}
         </Typography>
         <img src={HeartIcon} alt="Add to my recipes"/>
       </CardContent>
