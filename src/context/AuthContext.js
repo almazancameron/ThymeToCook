@@ -23,7 +23,8 @@ export function AuthProvider({ children }) {
   }
 
   function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+    signInWithEmailAndPassword(auth, email, password);
+    return;
   }
 
   function logout() {

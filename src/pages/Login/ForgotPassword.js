@@ -42,44 +42,28 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Login() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const { login } = useAuth();
+  const { resetPassword } = useAuth();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
-      setSuccess(false);
+      setMessage("");
       setError("");
       setLoading(true);
-      await login(email, password);
+      await resetPassword(email);
       setSuccess(true);
-      setTimeout(() => navigate("/"), 5000);
+      setMessage("Check your inbox for further instructions");
     } catch {
-      setError("Failed to Login please try again");
+      setError("Failed to reset password");
     }
-
     setLoading(false);
-  }
-
-  async function signInWithGoogle() {
-    setSuccess(false);
-    setError("");
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        setSuccess(true);
-        setTimeout(() => navigate("/"), 5000);
-      })
-      .catch((error) => {
-        setError("Failed to Login please try again");
-      });
   }
 
   return (
@@ -116,13 +100,13 @@ export default function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Forgot Password
             </Typography>
 
             {success && (
               <Alert severity="success">
                 <AlertTitle>Success</AlertTitle>
-                Successfully Logged In!
+                {message}
               </Alert>
             )}
             <Box
@@ -141,53 +125,13 @@ export default function Login() {
                 autoFocus
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Typography variant="h6" textAlign="center">
-                <br />
-                OR
-                <br />
-                <br />
-              </Typography>
-              <Button
-                variant="contained"
-                startIcon={<GoogleIcon />}
-                endIcon={<ArrowForwardIosIcon />}
-                onClick={signInWithGoogle}
-              >
-                Login with Google
+                Submit
               </Button>
               <Copyright sx={{ mt: 5 }} />
             </Box>

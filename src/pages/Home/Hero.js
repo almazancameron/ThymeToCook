@@ -15,7 +15,8 @@ export default function Hero() {
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
-                backgroundImage: `url(${Image})`
+                backgroundImage: `url(${Image})`,
+                marginBottom: '10px'
             }}>
         </Paper>
     )
