@@ -1,4 +1,8 @@
-import * as React from "react";
+import React, { useState, useRef } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
+import { AlertTitle, Alert } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,8 +16,6 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import image from "../../images/signup--image.jpg";
 
-import { signUpAuth } from "../../auth/auth";
-
 function Copyright(props) {
   return (
     <Typography
@@ -23,7 +25,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="#">
+      <Link color="inherit" href="/">
         ThymeToCook
       </Link>{" "}
       {new Date().getFullYear()}
@@ -35,7 +37,38 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Signup() {
-  signUpAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const { signUp } = useAuth();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (password !== passwordConfirm) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    try {
+      setSuccess(false);
+      setError("");
+      setLoading(true);
+      await signUp(email, password);
+      setSuccess(true);
+      setTimeout(() => navigate("/"), 2000);
+    } catch {
+      setError("Failed to create an account");
+    }
+
+    setLoading(false);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -72,12 +105,25 @@ export default function Signup() {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
+            {success && (
+              <Alert severity="success">
+                <AlertTitle>Success</AlertTitle>
+                Account successfully registered
+              </Alert>
+            )}
+
+            {error && (
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {error}
+              </Alert>
+            )}
             <Box
               component="form"
               noValidate
-              onSubmit={signUpAuth.handleSubmit}
               sx={{ mt: 1 }}
               id="signup-form"
+              onSubmit={handleSubmit}
             >
               <TextField
                 margin="normal"
@@ -88,6 +134,7 @@ export default function Signup() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -98,6 +145,7 @@ export default function Signup() {
                 type="password"
                 id="password"
                 autoComplete="off"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -108,8 +156,10 @@ export default function Signup() {
                 type="password"
                 id="confirm_password"
                 autoComplete="off"
+                onChange={(e) => setPasswordConfirm(e.target.value)}
               />
               <Button
+                disabled={loading}
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -120,7 +170,7 @@ export default function Signup() {
               <Grid container>
                 <Grid item xs></Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/login" variant="body2">
                     {"Already have an account? Sign in"}
                   </Link>
                 </Grid>

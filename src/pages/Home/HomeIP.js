@@ -2,7 +2,6 @@ import React from 'react'
 import { AppBar, Box, Container, Grid, MenuItem, Paper, Toolbar, Typography } from '@mui/material'
 import RamenDiningIcon from '@mui/icons-material/RamenDining';
 
-import Hero from './Hero'
 import Image from '../../images/hero--image.jpg'
 
 export default function HomeIP() {
