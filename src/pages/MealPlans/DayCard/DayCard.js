@@ -3,12 +3,12 @@ import MealCard from "./MealCard/MealCard"
 
 const DayCard = ({meals, date}) => {
     return (
-        <Card container>
+        <Card>
             <CardHeader title={`Meals for ${new Date(date.seconds*1000).toLocaleDateString()}`} />
             <CardContent>
-                {meals.map((meal) => {
+                {meals.map((meal, i) => {
                     return (
-                        <MealCard meal={meal} />
+                        <MealCard key={i} meal={meal} />
                     )
                 })}
             </CardContent>
