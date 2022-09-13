@@ -3,8 +3,9 @@ import { collection, addDoc, updateDoc, getDoc, query, getDocs, doc, where } fro
 
 
 export async function addMealplan(mealplan) {
+    const { id, ...obj } = mealplan
     try {
-        const docRef = await addDoc(collection(db, "mealplans"), mealplan);
+        const docRef = await addDoc(collection(db, "mealplans"), obj);
         console.log("Document written with ID: ", docRef.id);
         return docRef.id
     } catch (e) {
@@ -13,9 +14,10 @@ export async function addMealplan(mealplan) {
 }
 
 export async function updateMealplan(updatedMealplan) {
+    const { id, ...obj } = updatedMealplan
     const mealplanRef = doc(db, 'mealplans', updatedMealplan.id)
     try {
-        await updateDoc(mealplanRef, updatedMealplan);
+        await updateDoc(mealplanRef, obj);
         console.log("Updated document with ID " + updatedMealplan.id);
         return updatedMealplan
     } catch (e) {
