@@ -9,12 +9,17 @@ import Button from '@mui/material/Button'
 import AddMealPlanModal from './AddMealPlanModal/AddMealPlanModal';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useAuth } from '../../context/AuthContext';
 
 
 const MealPlans = () => {
     const [mealplans, setMealplans] = useState([])
     const [currentMealplan, setCurrentMealplan] = useState(null)
     const [viewAddPlanModal, setViewAddPlanModal] = useState(false)
+
+    const { currentUser } = useAuth()
+
+    console.log(currentUser)
 
     const toggleViewAddPlanModal = () => {
         setViewAddPlanModal(!viewAddPlanModal)

@@ -5,8 +5,9 @@ import Typography from "@mui/material/Typography";
 import HeartIcon from "../assets/iconheartplus.png";
 import Grid from '@mui/material/Grid'
 import styles from '../Recipes.module.css'
+import {Link} from 'react-router-dom'
 
-const RecipeCard = ({ recipe }) => {
+const RecipeCard = ({ recipe, variant='none' }) => {
     const { name, ingredients, imageURL } = recipe; //calories, time to cook, rating, users, imageURL
 
     const strip = (html) => {
@@ -28,9 +29,11 @@ const RecipeCard = ({ recipe }) => {
                 />
                 <div className={styles.recipeFooter}>
                     <Typography className="recipe-description" component='span'>
-                        <a>View Recipe &nbsp;</a>
+                        <Link to={`${recipe.id}`}>View Recipe</Link> &nbsp;
                     </Typography>
-                    <img src={HeartIcon} alt="Add to my recipes"/>
+                    {variant==='heart' &&
+                        <img src={HeartIcon} alt="Add to my recipes"/>
+                    }
                 </div>
             </CardContent>
         </Card>

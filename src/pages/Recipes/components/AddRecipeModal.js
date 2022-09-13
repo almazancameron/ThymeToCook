@@ -3,9 +3,11 @@ import styles from '../Recipes.module.css'
 import CloseIcon from '@mui/icons-material/Close';
 import {useState} from 'react'
 import { addRecipe } from '../../../api/recipes';
+import { useAuth } from '../../../context/AuthContext';
 
 const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, updateRecipes}) => {
-    const [newRecipe, setNewRecipe] = useState({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users:[]})
+    const {currentUser} = useAuth()
+    const [newRecipe, setNewRecipe] = useState({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: [currentUser.uid]})
     const [newIngredient, setNewIngredient] = useState('')
 
     const handleSubmit = async () => {
