@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardContent } from "@mui/material"
 import MealCard from "./MealCard/MealCard"
+import styles from '../MealPlans.module.css'
 
 const DayCard = ({meals, date}) => {
     return (

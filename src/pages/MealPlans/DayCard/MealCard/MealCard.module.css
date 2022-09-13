@@ -2,3 +2,7 @@
     object-fit: scale-down;
     max-width:100%;
 }
+
+.navSelect {
+    color:white !important;
+}

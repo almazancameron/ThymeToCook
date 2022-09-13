@@ -20,6 +20,15 @@ const MealPlans = () => {
         setViewAddPlanModal(!viewAddPlanModal)
     }
 
+    const classes = theme => ({
+        root: {
+          color:'white',
+        },
+        whiteColor: {
+          color: "white"
+        }
+    });
+
     useEffect(() => {
         const getMealPlans = async () => {
             const allMealPlans = await getAllMealPlans() // this will be getUserMealPlans when we have user context so the user will only access their own meal plans
@@ -50,16 +59,19 @@ const MealPlans = () => {
                         >
                             <ArrowBackIosNewIcon />
                         </Button>
-                        <FormControl>
+                        <FormControl className={styles.navSelect}>
                             <InputLabel id='mealplan-select-label'>Meal Plans</InputLabel>
                             <Select
                                 color='success'
-                                style={{minWidth:'12em'}}
+                                style={{minWidth:'12em', color:'white', backgroundColor:'gray'}}
                                 labelId='mealplan-select-label'
                                 id='mealplan-select'
                                 value={mealplans.indexOf(currentMealplan)}
                                 label='Meal Plans'
                                 onChange={(e) => setCurrentMealplan(mealplans[e.target.value])}
+                                classes={{
+                                    label: classes.root
+                                }}
                             >
                                 {mealplans.map((p, i) => {
                                     return (
@@ -93,7 +105,7 @@ const MealPlans = () => {
                             <Grid container spacing={2}>
                                 {currentMealplan.days.map((dayPlan, i) => {
                                     return (
-                                        <Grid key={i} item xs={12} md={12/currentMealplan.days.length}>
+                                        <Grid key={i} item xs={12} md={12/currentMealplan.days.length} className={styles.gridItem}>
                                             <DayCard meals={dayPlan.meals} date={dayPlan.date} />
                                         </Grid>
                                     )

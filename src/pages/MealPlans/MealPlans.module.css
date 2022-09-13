@@ -14,3 +14,13 @@ body {
 .navRow {
     display:flex;
 }
+
+.navRow label {
+    color:white !important;
+}
+
+.gridItem {
+    display:flex;
+    height:100%;
+    flex-direction:column;
+}
