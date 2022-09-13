@@ -1,8 +1,16 @@
 .planHeader {
-    background-color: rgb(202, 202, 202);
+    background-color: rgb(170, 236, 175);
     text-align:center;
-    color:rgb(83, 83, 83)
+    color:#0a7e10
 }
 body {
     padding:0.5em;
+}
+
+.navLogo {
+    margin-right:2em !important;
+}
+
+.navRow {
+    display:flex;
 }

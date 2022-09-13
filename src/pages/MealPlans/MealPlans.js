@@ -1,92 +1,113 @@
-import { CardContent, CardHeader, Grid, Typography } from '@mui/material';
+import { CardContent, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { addMealplan, getAllMealPlans, getUserMealPlans } from '../../api/mealplans';
 import DayCard from './DayCard/DayCard';
 import styles from './MealPlans.module.css'
+import Button from '@mui/material/Button'
+import AddMealPlanModal from './AddMealPlanModal/AddMealPlanModal';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 
 const MealPlans = () => {
     const [mealplans, setMealplans] = useState([])
+    const [currentMealplan, setCurrentMealplan] = useState(null)
+    const [viewAddPlanModal, setViewAddPlanModal] = useState(false)
+
+    const toggleViewAddPlanModal = () => {
+        setViewAddPlanModal(!viewAddPlanModal)
+    }
 
     useEffect(() => {
         const getMealPlans = async () => {
-            const allMealPlans = await getAllMealPlans()
+            const allMealPlans = await getAllMealPlans() // this will be getUserMealPlans when we have user context so the user will only access their own meal plans
+            const todayHasPlan = allMealPlans.filter((p) => new Date(p.dateEnd.seconds*1000) >= new Date() && new Date(p.dateStart.seconds*1000) <= new Date() ).length > 0
+            const todayPlan = todayHasPlan ? 
+                allMealPlans.find((p) => new Date(p.dateEnd.seconds*1000) > new Date() && new Date(p.dateStart.seconds*1000) < new Date()) : 
+                null
+            // console.log(todayPlan)
             setMealplans(allMealPlans)
+            setCurrentMealplan(todayPlan || allMealPlans[0])
         }
 
         getMealPlans()
     }, [])
 
-    // const mockMeals = [
-    //     {
-    //         name:'French Omelette',
-    //         recipeId:'000aaa',
-    //         meal:'Breakfast',
-    //         imageURL: 'https://www.seriouseats.com/thmb/p0fPMJ46OoYl7QCLN92prA0kDv4=/880x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__04__20160323-french-omelet-vicky-wasik--29-4443fd8d1f5b4e359f31e384d901cefb.jpg'
-    //     },
-    //     {
-    //         name:'Caesar Salad',
-    //         recipeId: '123abc',
-    //         meal: 'Lunch',
-    //         imageURL: 'https://natashaskitchen.com/wp-content/uploads/2019/01/Caesar-Salad-Recipe-3.jpg'
-    //     },
-    //     {
-    //         name:'Spaghetti',
-    //         recipeId:'345def',
-    //         meal:'Dinner',
-    //         imageURL: 'https://veganwithgusto.com/wp-content/uploads/2021/05/speedy-spaghetti-arrabbiata-1st-image.jpg'
-    //     }
-    // ]
-    // const mockDays = [
-    //     {
-    //         date: new Date('9/6/2022'),
-    //         meals:mockMeals
-    //     },
-    //     {
-    //         date: new Date('9/7/2022'),
-    //         meals:mockMeals
-    //     },
-    //     {
-    //         date: new Date('9/8/2022'),
-    //         meals:mockMeals
-    //     }
-    // ]
-
-    // const mealplans[0] = {
-    //     dateStart: new Date('9/6/2022'),
-    //     dateEnd: new Date('9/9/2022'),
-    //     days: mockDays
-    // }
-
-    console.log(mealplans)
-
     return (
-        <div>
-            <Typography variant='h2'>Meal Plans</Typography>
-            <br />
-            {mealplans.length > 0 &&
-                <Card>
-                    <CardHeader 
-                        className={styles.planHeader} 
-                        title={`Meals for ${new Date(mealplans[0].dateStart.seconds*1000).toLocaleDateString()} - ${new Date(mealplans[0].dateEnd.seconds*1000).toLocaleDateString()}`} 
-                    />
-                    <CardContent component='div'>
-                        <Grid container spacing={2}>
-                            {mealplans[0].days.map((dayPlan) => {
-                                return (
-                                    <Grid item xs={12} md={12/mealplans[0].days.length}>
-                                        <DayCard meals={dayPlan.meals} date={dayPlan.date} />
-                                    </Grid>
-                                )
-                            })}
-                        </Grid>
-                        <button onClick={() => addMealplan(mealplans[0])}>click me idiot</button>
-                    </CardContent>
-                </Card>
+        <Grid container spacing={2}>
+            <Grid className={styles.navRow} item xs={12}>
+                <Typography variant='h3' component='span' className={styles.navLogo}>Navbar</Typography>
+                {mealplans.length > 0 &&
+                    <>
+                        <Button 
+                            onClick={() => {
+                                let prevIndex = mealplans.indexOf(currentMealplan) === 0 ? mealplans.length-1 : mealplans.indexOf(currentMealplan)-1
+                                setCurrentMealplan(mealplans[prevIndex])
+                            }} 
+                            color='success'
+                        >
+                            <ArrowBackIosNewIcon />
+                        </Button>
+                        <FormControl>
+                            <InputLabel id='mealplan-select-label'>Meal Plans</InputLabel>
+                            <Select
+                                color='success'
+                                style={{minWidth:'12em'}}
+                                labelId='mealplan-select-label'
+                                id='mealplan-select'
+                                value={mealplans.indexOf(currentMealplan)}
+                                label='Meal Plans'
+                                onChange={(e) => setCurrentMealplan(mealplans[e.target.value])}
+                            >
+                                {mealplans.map((p, i) => {
+                                    return (
+                                        <MenuItem key={i} value={i}>
+                                            {`${new Date(p.dateStart.seconds * 1000).toLocaleDateString()} - ${new Date(p.dateEnd.seconds * 1000).toLocaleDateString()}`}
+                                        </MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
+                        <Button 
+                            onClick={() => {
+                                let nextIndex = mealplans.indexOf(currentMealplan) === mealplans.length-1 ? 0 : mealplans.indexOf(currentMealplan)+1
+                                setCurrentMealplan(mealplans[nextIndex])
+                            }} 
+                            color='success'
+                        >
+                            <ArrowForwardIosIcon />
+                        </Button>
+                    </>
+                }
+            </Grid>
+            {currentMealplan &&
+                <Grid item xs={12}>
+                    <Card>
+                        <CardHeader 
+                            className={styles.planHeader} 
+                            title={`Meals for ${new Date(currentMealplan?.dateStart?.seconds*1000).toLocaleDateString()} - ${new Date(currentMealplan.dateEnd.seconds*1000).toLocaleDateString()}`} 
+                        />
+                        <CardContent component='div'>
+                            <Grid container spacing={2}>
+                                {currentMealplan.days.map((dayPlan, i) => {
+                                    return (
+                                        <Grid key={i} item xs={12} md={12/currentMealplan.days.length}>
+                                            <DayCard meals={dayPlan.meals} date={dayPlan.date} />
+                                        </Grid>
+                                    )
+                                })}
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Grid>
             }
-        </div>
+            <Grid item xs={12}>
+                <Button onClick={toggleViewAddPlanModal} variant='contained' color='success'>Add Meal Plans</Button>
+            </Grid>
+            <AddMealPlanModal viewAddPlanModal={viewAddPlanModal} toggleViewAddPlanModal={toggleViewAddPlanModal} />
+        </Grid>
     )
 }
 
