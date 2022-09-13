@@ -1,0 +1,103 @@
+* {
+    font-size: 25px;
+  }
+  
+  body {
+    font-family: serif;
+    background-color: #ced8df;
+  }
+  
+ 
+  .image{
+    display: block;
+    margin-left: auto;
+    width: 30%;
+    margin-right: auto;
+  
+  }
+
+  .main-container {
+    width: 600px;
+    height: min-content;
+   
+    padding: 20px;
+    margin: 20px;
+  
+  }
+  
+
+  .add-item-box {
+    background: grey;
+    color: black;
+
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 5px;
+  }
+  
+ 
+  
+  .add-item-input {
+    box-sizing: border-box;
+    border: none;
+    background: transparent;
+    color: black;
+    width: 100%;
+    height: 30px;
+  }
+  
+  input::placeholder {
+    color: black  ;
+  }
+  input:focus {
+    outline: 0;
+  }
+  
+  .item-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .item-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0 10px 0;
+  
+  }
+  
+  .item-name {
+    cursor: pointer;
+  }
+  
+  .item-name svg {
+    margin-left: 5px;
+    margin-right: 15px;
+  }
+  
+  .item-action-buttons {
+   
+    display: flex;
+    justify-content: space-between;
+  }
+  
+ 
+  button {
+    background: transparent;
+    border: none;
+    margin: 3px;
+    color: rgba(96, 6, 6, 0.553);
+  }
+  button:focus {
+    outline: 0;
+  }
+  
+  button:hover {
+    cursor: pointer;
+  }
+  
+  .completed {
+    text-decoration: line-through;
+  }
+  
