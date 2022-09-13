@@ -6,11 +6,13 @@ import moment from 'moment/moment';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { TextField } from "@mui/material";
+import * as firestore from 'firebase/firestore'
 
 const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal }) => {
+    const [newMealplan, setNewMealplan] = useState({dateStart: null, dateEnd: null})
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
-
+console.log(newMealplan)
     return (
         <Modal
             open={viewAddPlanModal}
@@ -18,7 +20,7 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal }) => {
         >
             <Box className={styles.modalBody}>
                 <Button className={styles.closeButton} color='error' onClick={toggleViewAddPlanModal}><CloseIcon /></Button>
-                <Typography id="modal-modal-title" variant="h5" style={{paddingBottom:'0.5em'}}>
+                <Typography id="modal-modal-title" variant="h5" className={styles.modalHeader}>
                     Add a Meal Plan
                 </Typography>
                 <Grid container spacing={2}>
@@ -27,8 +29,8 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal }) => {
                             <DesktopDatePicker
                                 label="Start Date"
                                 inputFormat="MM/DD/YYYY"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.format('L'))}
+                                value={newMealplan.dateStart ? new Date(newMealplan.dateStart.seconds * 1000) : null}
+                                onChange={(e) => setNewMealplan({...newMealplan, dateStart: firestore.Timestamp.fromDate(new Date(e.valueOf()))})}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </LocalizationProvider>
@@ -38,8 +40,8 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal }) => {
                             <DesktopDatePicker
                                 label="End Date"
                                 inputFormat="MM/DD/YYYY"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.format('L'))}
+                                value={newMealplan.dateEnd ? new Date(newMealplan.dateEnd.seconds * 1000) : null}
+                                onChange={(e) => setNewMealplan({...newMealplan, dateEnd: firestore.Timestamp.fromDate(new Date(e.valueOf()))})}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </LocalizationProvider>

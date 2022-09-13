@@ -5,9 +5,10 @@ import Typography from "@mui/material/Typography";
 import HeartIcon from "../assets/iconheartplus.png";
 import Grid from '@mui/material/Grid'
 import styles from '../Recipes.module.css'
+import {Link} from 'react-router-dom'
 
-const RecipeCard = ({ recipe }) => {
-    const { name, ingredients } = recipe; //calories, time to cook, rating, users, imageURL
+const RecipeCard = ({ recipe, variant='none' }) => {
+    const { name, ingredients, imageURL } = recipe; //calories, time to cook, rating, users, imageURL
 
     const strip = (html) => {
         let doc = new DOMParser().parseFromString(html, 'text/html');
@@ -15,22 +16,25 @@ const RecipeCard = ({ recipe }) => {
     }
 
     return (
-        <Card sx={{height: "100%"}} className="recipe-card">
+        <Card sx={{height: "100%"}} className={styles.recipeCard}>
             <CardContent>
-            <Typography className="recipe-name" component='h3'>
-                {name}
-            </Typography>
-            {/* <CardMedia
-                component="img"
-                height="200"
-                image={imageURL}
-                alt={title}
-            /> */}
-            
-            <Typography className="recipe-description">
-                {ingredients?.join(', ')}
-            </Typography>
-            <img src={HeartIcon} alt="Add to my recipes"/>
+                <Typography className="recipe-name" component='h3'>
+                    {name}
+                </Typography>
+                <CardMedia
+                    component="img"
+                    height="200"
+                    image={imageURL}
+                    alt={name}
+                />
+                <div className={styles.recipeFooter}>
+                    <Typography className="recipe-description" component='span'>
+                        <Link to={`${recipe.id}`}>View Recipe</Link> &nbsp;
+                    </Typography>
+                    {variant==='heart' &&
+                        <img src={HeartIcon} alt="Add to my recipes"/>
+                    }
+                </div>
             </CardContent>
         </Card>
     );

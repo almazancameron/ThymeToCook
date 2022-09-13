@@ -9,12 +9,14 @@ import Grid from '@mui/material/Grid'
 import styles from "./Recipes.module.css";
 import ReadMoreReact from 'read-more-react';
 import RecipeCard from "./components/RecipeCard";
-import { getAllRecipes } from "../../api/recipes";
+import { getAllRecipes, getUserRecipes } from "../../api/recipes";
 import Button from '@mui/material/Button'
 import AddRecipeModal from "./components/AddRecipeModal";
+import { useAuth } from "../../context/AuthContext";
 
 
 export default function RecipesPage() {
+    const {currentUser} = useAuth()
     const [recipes, setRecipes] = useState([])
     const [viewAddRecipeModal, setViewAddRecipeModal] = useState(false)
 
@@ -29,7 +31,7 @@ export default function RecipesPage() {
     useEffect(() => {
         const getRecipes = async () => {
             try {
-                const recipeList = await getAllRecipes()
+                const recipeList = await getUserRecipes(currentUser.uid)
                 setRecipes(recipeList)
             } catch (e) {
                 console.log('ERROR GETTING RECIPES')
@@ -41,7 +43,7 @@ export default function RecipesPage() {
 
   return (
     <div className={styles.recipeName}>
-      <nav className={styles.recipeHeader}><h1>Recipes</h1></nav>
+      <nav className={styles.recipeHeader}><h1>Saved Recipes</h1></nav>
       <Grid container spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
         {recipes.map((recipe) => {
           return (

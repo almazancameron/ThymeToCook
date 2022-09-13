@@ -14,9 +14,14 @@
     max-width:75vw;
     border-radius:10px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    color:black !important;
 }
 
 .closeButton {
     width:fit-content;
     align-self:flex-end;
+}
+
+.modalHeader {
+    padding-bottom:1em;
 }

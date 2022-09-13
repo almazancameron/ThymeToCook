@@ -34,7 +34,7 @@ export async function getRecipe(recipeId) {
 }
 
 export async function getUserRecipes(userId) {
-    const q = query(collection(db, 'recipes'), where('userId', '==', userId))
+    const q = query(collection(db, 'recipes'), where('users', 'array-contains', userId))
     try {
         const recipes = await getDocs(q)
         return recipes.docs.map(doc => ({...doc.data(), id: doc.id}))
