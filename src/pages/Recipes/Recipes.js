@@ -5,32 +5,54 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import HeartIcon from "./assets/iconheartplus.png";
-import "./Recipes.css";
+import Grid from '@mui/material/Grid'
+import styles from "./Recipes.module.css";
 import ReadMoreReact from 'read-more-react';
+import RecipeCard from "./components/RecipeCard";
+import { getAllRecipes } from "../../api/recipes";
+import Button from '@mui/material/Button'
+import AddRecipeModal from "./components/AddRecipeModal";
 
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState([])
+    const [viewAddRecipeModal, setViewAddRecipeModal] = useState(false)
+
+    const updateRecipes = (newRecipes) => {
+      setRecipes(newRecipes)
+    }
+
+    const toggleViewAddRecipeModal = () => {
+      setViewAddRecipeModal(!viewAddRecipeModal)
+    }
 
     useEffect(() => {
         const getRecipes = async () => {
             try {
-                const list = await axios.get(`https://api.spoonacular.com/recipes/random?number=1&limitLicense=true&apiKey=${process.env.REACT_APP_API_KEY}`)
-                setRecipes(list.data.recipes)
+                const recipeList = await getAllRecipes()
+                setRecipes(recipeList)
             } catch (e) {
                 console.log('ERROR GETTING RECIPES')
             }
         }
+
         getRecipes()
     }, [])
 
   return (
-    <div className="recipes-page">
-      <nav className="recipe-header"><h1>Recipes</h1></nav>
-      {recipes.map((recipe) => {
-        return <RecipeCard key={recipe.id} recipe={recipe} />;
-      })}
-      
+    <div className={styles.recipeName}>
+      <nav className={styles.recipeHeader}><h1>Recipes</h1></nav>
+      <Grid container spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
+        {recipes.map((recipe) => {
+          return (
+            <Grid item xs={2} className={styles.recipeCard}>
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            </Grid>
+          )
+        })}
+      </Grid>
+      <Button onClick={toggleViewAddRecipeModal} color='success'>Add Recipes</Button>
+      <AddRecipeModal viewAddRecipeModal={viewAddRecipeModal} toggleViewAddRecipeModal={toggleViewAddRecipeModal} recipes={recipes} updateRecipes={updateRecipes}  />
     </div>
   );
 }
@@ -38,36 +60,7 @@ export default function RecipesPage() {
 
 /* main recipe card on the page. Click on read more to expand summary.
 click on anywhere else on the card to get the full recipe. */
-const RecipeCard = ({ recipe }) => {
-  const { title, image, summary } = recipe;
 
-  const strip = (html) => {
-    let doc = new DOMParser().parseFromString(html, 'text/html');
-    return doc.body.textContent || "";
- }
-
-  return (
-  
-    <Card className="recipe-card" sx={{ maxWidth: 275 }}>
-      <CardContent>
-        <Typography className="recipe-name" sx={{ fontSize: 14 }}>
-          {title}
-        </Typography>
-        <CardMedia
-          component="img"
-          height="200"
-          image={image}
-          alt={title}
-        />
-        
-        <Typography className="recipe-description" sx={{ fontSize: 12 }}>
-          {strip(summary)}
-        </Typography>
-        <img src={HeartIcon} alt="Add to my recipes"/>
-      </CardContent>
-    </Card>
-  );
-};
 
 const minimumLength = 80;
 const idealLength = 100;
