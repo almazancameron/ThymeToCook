@@ -24,6 +24,7 @@ function App() {
               <Route path="/homeip" element={<HomeIP />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/recipes" element={<RecipesPage />} />
+              <Route path='/recipes/:recipe' element={<RecipesPage />} />
             </Routes>
           </AuthProvider>
         </Router>

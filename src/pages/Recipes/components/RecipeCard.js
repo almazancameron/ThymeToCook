@@ -8,7 +8,7 @@ import styles from '../Recipes.module.css'
 import {Link} from 'react-router-dom'
 
 const RecipeCard = ({ recipe, variant='none' }) => {
-    const { name, ingredients, imageURL } = recipe; //calories, time to cook, rating, users, imageURL
+    const { name, ingredients, imageURL, id, prepTime, calories } = recipe; //calories, time to cook, rating, users, imageURL
 
     const strip = (html) => {
         let doc = new DOMParser().parseFromString(html, 'text/html');
@@ -28,8 +28,11 @@ const RecipeCard = ({ recipe, variant='none' }) => {
                     alt={name}
                 />
                 <div className={styles.recipeFooter}>
+                    <Typography className="recipe-link" component='span'>
+                        <Link to={`${id}`}>View Recipe</Link> &nbsp;
+                    </Typography>
                     <Typography className="recipe-description" component='span'>
-                        <Link to={`${recipe.id}`}>View Recipe</Link> &nbsp;
+                        {recipe?.calories} kcal.
                     </Typography>
                     {variant==='heart' &&
                         <img src={HeartIcon} alt="Add to my recipes"/>

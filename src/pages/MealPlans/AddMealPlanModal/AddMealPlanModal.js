@@ -12,7 +12,7 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal }) => {
     const [newMealplan, setNewMealplan] = useState({dateStart: null, dateEnd: null})
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
-console.log(newMealplan)
+
     return (
         <Modal
             open={viewAddPlanModal}

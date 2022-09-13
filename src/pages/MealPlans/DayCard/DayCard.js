@@ -4,7 +4,7 @@ import styles from '../MealPlans.module.css'
 
 const DayCard = ({meals, date}) => {
     return (
-        <Card>
+        <Card sx={{width:'100%'}}>
             <CardHeader title={`Meals for ${new Date(date.seconds*1000).toLocaleDateString()}`} />
             <CardContent>
                 {meals.map((meal, i) => {
