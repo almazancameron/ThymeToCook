@@ -19,14 +19,14 @@ import Face2Icon from "@mui/icons-material/Face2";
 import { useNavigate } from "react-router-dom";
 
 import Image from "../../images/hero--image.jpg";
+import Recipes from "./Recipies";
+import { useAuth } from "../../context/AuthContext";
 
 export default function HomeIP() {
-  const pages = ["Meal Plans", "Recipes", "Ingredients", "Grocery List"];
-  const settings = ["Sign Up", "Sign Out"];
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+  const logout = useAuth();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -57,6 +57,9 @@ export default function HomeIP() {
       case "signup":
         navigate("/signup");
         break;
+      case "signout":
+        logout();
+        navigate("/");
       default:
         navigate("/");
         break;
@@ -177,6 +180,15 @@ export default function HomeIP() {
                     Sign Up
                   </Typography>
                 </MenuItem>
+                <MenuItem key="signout" onClick={handleCloseUserMenu}>
+                  <Typography
+                    textAlign="center"
+                    onClick={handleClick}
+                    id="signup"
+                  >
+                    Sign Out
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>
@@ -221,6 +233,7 @@ export default function HomeIP() {
           </Grid>
         </Grid>
       </Paper>
+      {/* <Recipes /> */}
     </>
   );
 }
