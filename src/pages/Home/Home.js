@@ -5,6 +5,8 @@ const Home = () => {
         <div>
             <h1>Home</h1>
             <Link to='/mealplans'>go to meal plans</Link>
+            <br/>
+            <Link to='/recipes'>go to recipes</Link>
         </div>
     )
 }
