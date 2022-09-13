@@ -11,6 +11,9 @@ const Home = () => {
             <Link to='/login'>Login</Link>
             <h1>Home in Progress</h1>
             <Link to="/homeip">Home in Progress</Link>
+            <br/>
+            <h1>Recipes</h1>
+            <Link to='/recipes'>go to recipes</Link>
         </div>
     )
 }

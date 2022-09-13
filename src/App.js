@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import MealPlans from "./pages/MealPlans/MealPlans";
 import HomeIP from "./pages/Home/HomeIP";
 import ForgotPassword from "./pages/Login/ForgotPassword";
+import RecipesPage from './pages/Recipes/Recipes';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/homeip" element={<HomeIP />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/recipes" element={<RecipesPage />} />
             </Routes>
           </AuthProvider>
         </Router>
