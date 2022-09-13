@@ -31,7 +31,7 @@ export default function RecipesPage() {
     useEffect(() => {
         const getRecipes = async () => {
             try {
-                const recipeList = await getUserRecipes(currentUser.uid)
+                const recipeList = currentUser?.email?.length > 0 ? await getUserRecipes(currentUser.uid) : await getAllRecipes()
                 setRecipes(recipeList)
             } catch (e) {
                 console.log('ERROR GETTING RECIPES')

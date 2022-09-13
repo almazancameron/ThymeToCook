@@ -7,7 +7,7 @@ import { useAuth } from '../../../context/AuthContext';
 
 const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, updateRecipes}) => {
     const {currentUser} = useAuth()
-    const [newRecipe, setNewRecipe] = useState({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: [currentUser.uid]})
+    const [newRecipe, setNewRecipe] = useState({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: [currentUser?.uid || null]})
     const [newIngredient, setNewIngredient] = useState('')
 
     const handleSubmit = async () => {
