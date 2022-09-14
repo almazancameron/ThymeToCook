@@ -28,6 +28,8 @@ const DayCard = ({meals, date, mealplan, updateMealplan}) => {
     }, [])
 
     const toggleEditState = () => {
+        setSelectedRecipe(null)
+        setMeal('')
         setEditState(!editState)
     }
 

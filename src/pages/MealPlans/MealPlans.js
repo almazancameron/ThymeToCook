@@ -123,7 +123,7 @@ console.log(currentMealplan)
                 </Grid>
             }
             <Grid item xs={12}>
-                <Button onClick={toggleViewAddPlanModal} variant='contained' color='success'>Add Meal Plans</Button>
+                <Button onClick={toggleViewAddPlanModal} variant='contained' color='success'>Add Meal Plan</Button>
             </Grid>
             <AddMealPlanModal viewAddPlanModal={viewAddPlanModal} toggleViewAddPlanModal={toggleViewAddPlanModal} mealplans={mealplans} updateMealplans={updateMealplans} />
         </Grid>
