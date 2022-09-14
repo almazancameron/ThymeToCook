@@ -43,7 +43,7 @@ export default function RecipesPage() {
 
   return (
     <div className={styles.recipeName}>
-      <nav className={styles.recipeHeader}><h1>Saved Recipes</h1></nav>
+      <nav className={styles.recipeHeader}><h1>{currentUser.uid} Saved Recipes</h1></nav>
       <Grid container spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
         {recipes.map((recipe) => {
           return (
