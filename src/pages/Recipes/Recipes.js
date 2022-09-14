@@ -45,10 +45,10 @@ export default function RecipesPage() {
     <div className={styles.recipeName}>
       <nav className={styles.recipeHeader}><h1>Saved Recipes</h1></nav>
       <Grid container spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
-        {recipes.map((recipe) => {
+        {recipes.map((recipe, index) => {
           return (
             <Grid item xs={2} className={styles.recipeCard}>
-              <RecipeCard key={recipe.id} recipe={recipe} />
+              <RecipeCard key={recipe.id} recipe={recipe} recipes={recipes} updateRecipes={updateRecipes} index={index} />
             </Grid>
           )
         })}
