@@ -60,7 +60,7 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal, mealplans,
                         </LocalizationProvider>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button onClick={handleSubmit}>Test Submit</Button>
+                        <Button color='success' onClick={handleSubmit}>Test Submit</Button>
                     </Grid>
                 </Grid>
             </Box>
