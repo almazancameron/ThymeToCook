@@ -13,6 +13,7 @@ const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, 
     const handleSubmit = async () => {
         try {
             let id = await addRecipe(newRecipe)
+            newRecipe.id = id
             const newRecipes = [...recipes, newRecipe]
             updateRecipes(newRecipes)
             setNewRecipe({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []})
