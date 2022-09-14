@@ -11,9 +11,9 @@ const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, 
     const [newIngredient, setNewIngredient] = useState('')
 
     const handleSubmit = async () => {
-        const newRecipes = [...recipes, newRecipe]
         try {
-            await addRecipe(newRecipe)
+            let id = await addRecipe(newRecipe)
+            const newRecipes = [...recipes, newRecipe]
             updateRecipes(newRecipes)
             setNewRecipe({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []})
             toggleViewAddRecipeModal()

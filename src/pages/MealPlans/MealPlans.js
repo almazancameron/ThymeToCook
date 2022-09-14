@@ -41,7 +41,7 @@ const MealPlans = () => {
 
         getMealPlans()
     }, [])
-
+console.log(currentMealplan)
     return (
         <Grid container spacing={2}>
             <Grid className={styles.navRow} item xs={12}>

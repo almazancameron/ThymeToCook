@@ -7,12 +7,25 @@ import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { TextField } from "@mui/material";
 import * as firestore from 'firebase/firestore'
+import { useMemo } from "react";
+import { addMealplan } from "../../../api/mealplans";
 
-const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal }) => {
-    const [newMealplan, setNewMealplan] = useState({dateStart: null, dateEnd: null})
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
+const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal, mealplans, updateMealplans }) => {
+    const [newMealplan, setNewMealplan] = useState({dateStart: null, dateEnd: null, days: []})
+    const daysLength = useMemo(() => {
+        return ((newMealplan.dateEnd?.seconds + 86400) - newMealplan.dateStart?.seconds) / (60 * 60 * 24)
+    }, [newMealplan?.dateEnd, newMealplan?.dateStart])
 
+    const handleSubmit = async () => {
+        //86400 seconds in 1 day
+        for (let i = newMealplan.dateEnd?.seconds; i > newMealplan.dateStart?.seconds - 86400; i -= 86400) {
+            newMealplan.days.push({date: firestore.Timestamp.fromDate(new Date(i*1000)), meals: []})
+        }
+        let id = await addMealplan(newMealplan)
+        newMealplan.id = id
+        let copyMealplans = [...mealplans, newMealplan]
+        updateMealplans(copyMealplans)
+    }
     return (
         <Modal
             open={viewAddPlanModal}
@@ -45,6 +58,9 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal }) => {
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </LocalizationProvider>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button onClick={handleSubmit}>Test Submit</Button>
                     </Grid>
                 </Grid>
             </Box>

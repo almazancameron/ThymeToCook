@@ -6,10 +6,13 @@ import HeartIcon from "../assets/iconheartplus.png";
 import Grid from '@mui/material/Grid'
 import styles from '../Recipes.module.css'
 import {Link} from 'react-router-dom'
+import { Button } from "@mui/material";
+import { useAuth } from "../../../context/AuthContext";
 
-const RecipeCard = ({ recipe, variant='none' }) => {
+const RecipeCard = ({ recipe, variant='none', recipes, updateRecipes, index }) => {
     const { name, ingredients, imageURL, id, prepTime, calories } = recipe; //calories, time to cook, rating, users, imageURL
 
+    const {currentUser} = useAuth()
     const strip = (html) => {
         let doc = new DOMParser().parseFromString(html, 'text/html');
         return doc.body.textContent || "";
