@@ -6,13 +6,12 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import HeartIcon from "./assets/iconheartplus.png";
 import Grid from '@mui/material/Grid'
-import styles from "./Recipes.module.css";
+import styles from "./RecipesPage.module.css";
 import ReadMoreReact from 'read-more-react';
 import RecipeCard from "./components/RecipeCard";
 import { getAllRecipes, getUserRecipes } from "../../api/recipes";
 import Button from '@mui/material/Button'
 import AddRecipeModal from "./components/AddRecipeModal";
-import NavBar from "../../AppBar";
 import { useAuth } from "../../context/AuthContext";
 
 
@@ -44,7 +43,6 @@ export default function RecipesPage() {
 
   return (
     <div className={styles.recipeName}>
-      <NavBar/>
       <nav className={styles.recipeHeader}><h1>Saved Recipes</h1></nav>
       <Grid container spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
         {recipes.map((recipe) => {

@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import image from "../../images/signin--image.jpg";
 import GoogleIcon from "@mui/icons-material/Google";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import NavBar from "../../AppBar";
 import { useAuth } from "../../context/AuthContext";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../environments/firebase";
@@ -84,7 +84,8 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+     <NavBar/>
+     <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
           item

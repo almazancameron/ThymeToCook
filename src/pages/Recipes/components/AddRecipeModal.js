@@ -26,14 +26,12 @@ const AddRecipeModal = ({
     calories: "",
     prepTime: "",
     imageURL: "",
-    users: [currentUser.uid],
+    users: currentUser?.id ? [currentUser.id] : [],
   });
   const [newIngredient, setNewIngredient] = useState("");
 
   const handleSubmit = async () => {
-    // const newRecipes = [...recipes, newRecipe]
     try {
-      await addRecipe(newRecipe);
       let id = await addRecipe(newRecipe);
       newRecipe.id = id;
       const newRecipes = [...recipes, newRecipe];
@@ -44,7 +42,7 @@ const AddRecipeModal = ({
         calories: "",
         prepTime: "",
         imageURL: "",
-        users: [],
+        users: currentUser?.id ? [currentUser.id] : [],
       });
       toggleViewAddRecipeModal();
     } catch (error) {
@@ -52,13 +50,44 @@ const AddRecipeModal = ({
     }
   };
 
+  const handleAddIngredient = () => {
+    setNewRecipe({
+      ...newRecipe,
+      ingredients: [...newRecipe.ingredients, newIngredient],
+    });
+    setNewIngredient("");
+  };
+
   return (
-    <Modal open={viewAddRecipeModal} onClose={toggleViewAddRecipeModal}>
+    <Modal
+      open={viewAddRecipeModal}
+      onClose={() => {
+        setNewRecipe({
+          name: "",
+          ingredients: [],
+          calories: "",
+          prepTime: "",
+          imageURL: "",
+          users: currentUser?.id ? [currentUser.id] : [],
+        });
+        toggleViewAddRecipeModal();
+      }}
+    >
       <Box className={styles.modalBody}>
         <Button
           className={styles.closeButton}
           color="error"
-          onClick={toggleViewAddRecipeModal}
+          onClick={() => {
+            setNewRecipe({
+              name: "",
+              ingredients: [],
+              calories: "",
+              prepTime: "",
+              imageURL: "",
+              users: currentUser?.id ? [currentUser.id] : [],
+            });
+            toggleViewAddRecipeModal();
+          }}
         >
           <CloseIcon />
         </Button>
@@ -85,22 +114,28 @@ const AddRecipeModal = ({
                 ))}
               </ul>
             )}
-            <TextField
-              fullWidth
-              label="Add Ingredients"
-              variant="outlined"
-              value={newIngredient}
-              onChange={(e) => setNewIngredient(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key.toUpperCase() === "ENTER") {
-                  setNewRecipe({
-                    ...newRecipe,
-                    ingredients: [...newRecipe.ingredients, newIngredient],
-                  });
-                  setNewIngredient("");
-                }
-              }}
-            />
+            <div className="d-flex">
+              <TextField
+                fullWidth
+                label="Ingredients"
+                variant="outlined"
+                value={newIngredient}
+                onChange={(e) => setNewIngredient(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key.toUpperCase() === "ENTER") {
+                    handleAddIngredient();
+                  }
+                }}
+              />
+              <Button
+                onClick={handleAddIngredient}
+                sx={{ marginLeft: "2em" }}
+                variant="contained"
+                color="success"
+              >
+                Add
+              </Button>
+            </div>
           </Grid>
           <Grid item xs={6}>
             <TextField

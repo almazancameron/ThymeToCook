@@ -10,6 +10,7 @@ import AddMealPlanModal from './AddMealPlanModal/AddMealPlanModal';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useAuth } from '../../context/AuthContext';
+import NavBar from '../../AppBar';
 
 
 const MealPlans = () => {
@@ -19,20 +20,13 @@ const MealPlans = () => {
 
     const { currentUser } = useAuth()
 
-    console.log(currentUser)
+    const updateMealplans = (newMealplans) => {
+        setMealplans(newMealplans)
+    }
 
     const toggleViewAddPlanModal = () => {
         setViewAddPlanModal(!viewAddPlanModal)
     }
-
-    const classes = theme => ({
-        root: {
-          color:'white',
-        },
-        whiteColor: {
-          color: "white"
-        }
-    });
 
     useEffect(() => {
         const getMealPlans = async () => {
@@ -48,9 +42,10 @@ const MealPlans = () => {
 
         getMealPlans()
     }, [])
-
+console.log(currentMealplan)
     return (
         <Grid container spacing={2}>
+            <NavBar/>
             <Grid className={styles.navRow} item xs={12}>
                 <Typography variant='h3' component='span' className={styles.navLogo}>Navbar</Typography>
                 {mealplans.length > 0 &&
@@ -74,9 +69,6 @@ const MealPlans = () => {
                                 value={mealplans.indexOf(currentMealplan)}
                                 label='Meal Plans'
                                 onChange={(e) => setCurrentMealplan(mealplans[e.target.value])}
-                                classes={{
-                                    label: classes.root
-                                }}
                             >
                                 {mealplans.map((p, i) => {
                                     return (
@@ -123,7 +115,7 @@ const MealPlans = () => {
             <Grid item xs={12}>
                 <Button onClick={toggleViewAddPlanModal} variant='contained' color='success'>Add Meal Plans</Button>
             </Grid>
-            <AddMealPlanModal viewAddPlanModal={viewAddPlanModal} toggleViewAddPlanModal={toggleViewAddPlanModal} />
+            <AddMealPlanModal viewAddPlanModal={viewAddPlanModal} toggleViewAddPlanModal={toggleViewAddPlanModal} mealplans={mealplans} updateMealplans={updateMealplans} />
         </Grid>
     )
 }
