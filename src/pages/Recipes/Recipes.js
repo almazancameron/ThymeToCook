@@ -12,6 +12,7 @@ import RecipeCard from "./components/RecipeCard";
 import { getAllRecipes, getUserRecipes } from "../../api/recipes";
 import Button from '@mui/material/Button'
 import AddRecipeModal from "./components/AddRecipeModal";
+import NavBar from "../../AppBar";
 import { useAuth } from "../../context/AuthContext";
 
 
@@ -43,12 +44,13 @@ export default function RecipesPage() {
 
   return (
     <div className={styles.recipeName}>
+      <NavBar/>
       <nav className={styles.recipeHeader}><h1>Saved Recipes</h1></nav>
       <Grid container spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
-        {recipes.map((recipe, index) => {
+        {recipes.map((recipe) => {
           return (
             <Grid item xs={2} className={styles.recipeCard}>
-              <RecipeCard key={recipe.id} recipe={recipe} recipes={recipes} updateRecipes={updateRecipes} index={index} />
+              <RecipeCard key={recipe.id} recipe={recipe} />
             </Grid>
           )
         })}
