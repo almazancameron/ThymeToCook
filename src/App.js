@@ -4,9 +4,8 @@ import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
-import Home from "./pages/Home/Home";
 import MealPlans from "./pages/MealPlans/MealPlans";
-import HomeIP from "./pages/Home/HomeIP";
+import Home from "./pages/Home/Home";
 import ForgotPassword from "./pages/Login/ForgotPassword";
 import RecipesPage from "./pages/Recipes/Recipes";
 
@@ -21,10 +20,10 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/mealplans" element={<MealPlans />} />
               <Route path="/" element={<Home />} />
-              <Route path="/homeip" element={<HomeIP />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/recipes" element={<RecipesPage />} />
-              <Route path='/recipes/:recipe' element={<RecipesPage />} />
+              <Route path="/recipes/:recipe" element={<RecipesPage />} />
             </Routes>
           </AuthProvider>
         </Router>

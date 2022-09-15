@@ -49,7 +49,7 @@ export default function NavBar() {
         navigate("/mealplans");
         break;
       case "recipes":
-        navigate("/");
+        navigate("/recipes");
         break;
       case "ingredients":
         navigate("/");
@@ -111,15 +111,6 @@ export default function NavBar() {
                 Recipes
               </Typography>
             </MenuItem>
-            <MenuItem key="Ingredients">
-              <Typography
-                textAlign="center"
-                onClick={handleClick}
-                id="ingredients"
-              >
-                Ingredients
-              </Typography>
-            </MenuItem>
             <MenuItem key="grocery">
               <Typography textAlign="center" onClick={handleClick} id="grocery">
                 Grocery List
@@ -127,6 +118,7 @@ export default function NavBar() {
             </MenuItem>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
+            {auth.currentUser.email}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Face2Icon
