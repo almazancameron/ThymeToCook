@@ -27,10 +27,10 @@ const RecipeCard = ({ recipe, recipes, updateRecipes, variant = "none" }) => {
     }
   }
 
-    const strip = (html) => {
-        let doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent || "";
-    }
+  const strip = (html) => {
+    let doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
 
   return (
     <Card sx={{ height: "100%" }} className={styles.recipeCard}>
@@ -68,4 +68,4 @@ const RecipeCard = ({ recipe, recipes, updateRecipes, variant = "none" }) => {
   );
 };
 
-export default RecipeCard
+export default RecipeCard;

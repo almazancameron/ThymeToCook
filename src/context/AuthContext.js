@@ -17,22 +17,24 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
-  function signUp(email, password) {
-    createUserWithEmailAndPassword(auth, email, password);
+  async function signUp(email, password) {
+    await createUserWithEmailAndPassword(auth, email, password);
     return;
   }
 
-  function login(email, password) {
-    signInWithEmailAndPassword(auth, email, password);
+  async function login(email, password) {
+    await signInWithEmailAndPassword(auth, email, password);
     return;
   }
 
-  function logout() {
-    return signOut();
+  async function logOut() {
+    await signOut(auth);
+    return;
   }
 
-  function resetPassword(email) {
-    return sendPasswordResetEmail(auth, email);
+  async function resetPassword(email) {
+    await sendPasswordResetEmail(auth, email);
+    return;
   }
 
   function updateEmail(email) {
@@ -56,7 +58,7 @@ export function AuthProvider({ children }) {
     currentUser,
     login,
     signUp,
-    logout,
+    logOut,
     resetPassword,
     updateEmail,
     updatePassword,

@@ -1,9 +1,17 @@
-import { Modal, Box, Button, Typography, TextField, Grid, InputAdornment } from '@mui/material'
-import styles from '../Recipes.module.css'
-import CloseIcon from '@mui/icons-material/Close';
-import {useState} from 'react'
-import { addRecipe } from '../../../api/recipes';
-import { useAuth } from '../../../context/AuthContext';
+import {
+  Modal,
+  Box,
+  Button,
+  Typography,
+  TextField,
+  Grid,
+  InputAdornment,
+} from "@mui/material";
+import styles from "../Recipes.module.css";
+import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
+import { addRecipe } from "../../../api/recipes";
+import { useAuth } from "../../../context/AuthContext";
 
 const AddRecipeModal = ({
   viewAddRecipeModal,
