@@ -25,14 +25,28 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal, mealplans,
         newMealplan.id = id
         let copyMealplans = [...mealplans, newMealplan]
         updateMealplans(copyMealplans)
+        setNewMealplan({dateStart: null, dateEnd: null, days: []})
+        toggleViewAddPlanModal()
     }
     return (
         <Modal
             open={viewAddPlanModal}
-            onClose={toggleViewAddPlanModal}
+            onClose={() => {
+                toggleViewAddPlanModal()
+                setNewMealplan({dateStart: null, dateEnd: null, days: []})
+            }}
         >
             <Box className={styles.modalBody}>
-                <Button className={styles.closeButton} color='error' onClick={toggleViewAddPlanModal}><CloseIcon /></Button>
+                <Button 
+                    className={styles.closeButton} 
+                    color='error' 
+                    onClick={() => {
+                        toggleViewAddPlanModal()
+                        setNewMealplan({dateStart: null, dateEnd: null, days: []})
+                    }}
+                >
+                    <CloseIcon />
+                </Button>
                 <Typography id="modal-modal-title" variant="h5" className={styles.modalHeader}>
                     Add a Meal Plan
                 </Typography>
@@ -60,7 +74,7 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal, mealplans,
                         </LocalizationProvider>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button onClick={handleSubmit}>Test Submit</Button>
+                        <Button color='success' onClick={handleSubmit}>Submit</Button>
                     </Grid>
                 </Grid>
             </Box>
