@@ -9,6 +9,7 @@ import MealPlans from "./pages/MealPlans/MealPlans";
 import HomeIP from "./pages/Home/HomeIP";
 import ForgotPassword from "./pages/Login/ForgotPassword";
 import RecipesPage from './pages/Recipes/Recipes';
+import Recipe from './pages/Recipes/Recipe'
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
               <Route path="/homeip" element={<HomeIP />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/recipes" element={<RecipesPage />} />
-              <Route path='/recipes/:recipe' element={<RecipesPage />} />
+              <Route path='/recipes/:recipe' element={<Recipe />} />
             </Routes>
           </AuthProvider>
         </Router>

@@ -1,11 +1,9 @@
-import React, { useState, useEffect , useParams } from "react";
+import React, { useState, useEffect  } from "react";
+import {useLocation} from "react-router-dom"
 import styles from "./Recipe.module.css";
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import Checkbox from '@mui/material/Checkbox';
-import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
+
 
 import axios from 'axios';
 import Card from "@mui/material/Card";
@@ -23,22 +21,22 @@ import AddRecipeModal from "./components/AddRecipeModal";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Recipe(recipeId) {
-    console.log("enteres")
-    const params = useParams();
+ 
+    const location = useLocation();
+    const patharray = location.pathname.split("/");
     const {currentUser} = useAuth();
     const [recipe, setRecipe] = useState([]);
-     currentUser ="Gw1hZ8Fv0D0WWmQzXrhV";
-//   const [items, setItems] = useState([
-//     { itemName: "item 1", isSelected: false },
-//     { itemName: "item 2", isSelected: false },
-//     { itemName: "item 3", isSelected: false },
-//   ]);
-console.log("parametsr : " + params)
+    const [alert, setAlert]=useState({
+      text: 'Added to grocery list!',
+      show:false 
+    })
+     
+
 
   useEffect(() => {
     const getRecipeinfo = async () => {
         try {
-            const recipe = params.recipeId > 0 ? await getRecipe(params.recipeId) : await "Error"
+            const recipe = patharray[patharray.length-1] ? await getRecipe(patharray[patharray.length-1] ) : await console.log("Error:No recipes")
             setRecipe(recipe)
         } catch (e) {
             console.log('ERROR GETTING RECIPES')
@@ -62,13 +60,7 @@ console.log("parametsr : " + params)
 //     setInputValue("");
 //   };
 
-//   const handleAddToGrocery = (index) => {
-//     const newItems = [...items];
-//     // here add the item to grocery list
 
-//     console.log("Item added to grocery list");
-//     // setItems(newItems);
-//   };
 
 //   const toggleComplete = (index) => {
 //     const newItems = [...items];
@@ -77,7 +69,25 @@ console.log("parametsr : " + params)
 
 //     setItems(newItems);
 //   };
-  console.log("recipe : " + recipe)
+
+function onCloseAlert() {
+  setAlert({
+    text: '',
+    show: false
+  })
+}
+function onShowAlert() {
+  console.log("inshowlaet")
+  setAlert({
+    text: '',
+    show: true
+  })
+}
+
+function handleCart(){
+  console.log("inshowlaet")
+}
+
   return (
     <div className={styles.appbackground}>
       <img
@@ -89,35 +99,27 @@ console.log("parametsr : " + params)
         <h1>Ingredients List</h1>
        
         <div className={styles.itemlist}>
-          {recipe.map((recipe, index) => (
+          {recipe.ingredients?.map((ingredient, index) => (
             <div className={styles.itemcontainer}>
-              <div className={styles.itemname} onClick={() => "toggleComplete(index)"}>
-                {/* {item.isSelected ? ( */}
-                  <>
-                    <CheckBoxRoundedIcon icon={CheckBoxRoundedIcon} />
-                    <RecipeCard key={recipe.id} recipe={recipe} />
-                    <span className={styles.completed}>{recipe.ingredients}</span>
-                  </>
-                {/* ) : ( */}
-                  <>
-                    <CheckBoxOutlineBlankRoundedIcon icon={CheckBoxOutlineBlankRoundedIcon} />
-                    <span>{recipe.ingredients}</span>
-                  </>
-                {/* )} */}
+              <div className={styles.itemname} >
+                    <p key={index}>{ingredient} </p>
               </div>
               <div className={styles.addtogrocery}>
-                <button>
-                  <AddShoppingCartIcon
+               <button>
+              <AddShoppingCartIcon
                     icon={AddShoppingCartIcon}
-                    onClick={() => "handleAddToGrocery(index)"}
-                  />
-                </button>
+                    onClick={ handleCart }/> 
+                   
+                   </button> 
+             
               </div>
+  
+             
              
             </div>
           ))}
         </div>
-        <div className={styles.additembox}>
+        {/* <div className={styles.additembox}>
           <input
             value={"inputValue"}
             onChange={(event) => "setInputValue(event.target.value)"}
@@ -128,8 +130,15 @@ console.log("parametsr : " + params)
             icon={AddRoundedIcon}
             onClick={() =>" handleAddButtonClick()"}
           />
-        </div>
-        <h2>Description</h2>
+        </div> */}
+        <h2>Instructions</h2>
+        <div>
+        { recipe.instructions?.map(
+            (steps) => <p> {steps}</p>
+        )
+          } 
+         
+       </div> 
       </div>
     </div>
   );

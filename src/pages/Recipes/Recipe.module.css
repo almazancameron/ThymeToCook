@@ -4,7 +4,7 @@
   
   body {
     font-family: serif;
-    background-color: #18191a;
+    background-color:rgb(92, 87, 87) ;
   }
   
  
@@ -93,7 +93,7 @@
     background: transparent;
     border: none;
     margin: 3px;
-    color: rgba(96, 6, 6, 0.553);
+    color: white;
   }
   button:focus {
     outline: 0;
