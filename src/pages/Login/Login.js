@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import image from "../../images/signin--image.jpg";
 import GoogleIcon from "@mui/icons-material/Google";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import NavBar from "../../AppBar";
 import { useAuth } from "../../context/AuthContext";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../environments/firebase";
@@ -51,19 +51,19 @@ export default function Login() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
-      setSuccess(false);
       setError("");
       setLoading(true);
       await login(email, password);
       setSuccess(true);
-      setTimeout(() => navigate("/"), 5000);
+      setTimeout(() => navigate("/"), 2000);
     } catch {
-      setError("Failed to Login please try again");
+      setError("Failed to log in");
     }
 
     setLoading(false);
@@ -75,7 +75,7 @@ export default function Login() {
     signInWithPopup(auth, provider)
       .then((result) => {
         setSuccess(true);
-        setTimeout(() => navigate("/"), 5000);
+        setTimeout(() => navigate("/"), 2000);
       })
       .catch((error) => {
         setError("Failed to Login please try again");
@@ -84,7 +84,8 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+     <NavBar/>
+     <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
           item
@@ -118,11 +119,15 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-
             {success && (
               <Alert severity="success">
                 <AlertTitle>Success</AlertTitle>
                 Successfully Logged In!
+              </Alert>
+            )}
+            {error && (
+              <Alert severity="error">
+                <AlertTitle>Failed to log in</AlertTitle>
               </Alert>
             )}
             <Box
@@ -165,7 +170,7 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/forgotpassword" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
