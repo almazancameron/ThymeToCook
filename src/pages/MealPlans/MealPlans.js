@@ -10,6 +10,7 @@ import AddMealPlanModal from './AddMealPlanModal/AddMealPlanModal';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useAuth } from '../../context/AuthContext';
+import NavBar from '../../AppBar';
 
 
 const MealPlans = () => {
@@ -44,6 +45,7 @@ const MealPlans = () => {
 console.log(currentMealplan)
     return (
         <Grid container spacing={2}>
+            <NavBar/>
             <Grid className={styles.navRow} item xs={12}>
                 <Typography variant='h3' component='span' className={styles.navLogo}>Navbar</Typography>
                 {mealplans.length > 0 &&

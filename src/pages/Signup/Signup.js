@@ -15,6 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import image from "../../images/signup--image.jpg";
+import NavBar from "../../AppBar";
 
 function Copyright(props) {
   return (
@@ -71,6 +72,7 @@ export default function Signup() {
 
   return (
     <ThemeProvider theme={theme}>
+      <NavBar/>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
