@@ -21,12 +21,22 @@ import { useNavigate } from "react-router-dom";
 import Image from "../../images/hero--image.jpg";
 import Recipes from "./Recipies";
 import { useAuth } from "../../context/AuthContext";
+import { signOut } from "firebase/auth";
+// import { logOut } from "../../context/AuthContext";
 
 export default function HomeIP() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
-  const logout = useAuth();
+  const auth = useAuth();
+  const { logOut } = useAuth();
+
+  const signUserOut = async () => {
+    console.log(auth.currentUser.email);
+    const result = await logOut(auth.currentUser);
+    console.log("Entered sign out functions");
+    console.log(auth.currentUser.email);
+  };
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -37,7 +47,6 @@ export default function HomeIP() {
   };
 
   function handleClick(e) {
-    console.log(e.currentTarget.id);
     switch (e.currentTarget.id) {
       case "mealPlans":
         navigate("/mealplans");
@@ -58,7 +67,7 @@ export default function HomeIP() {
         navigate("/signup");
         break;
       case "signout":
-        logout();
+        signUserOut();
         navigate("/");
       default:
         navigate("/");

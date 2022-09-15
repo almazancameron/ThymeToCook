@@ -2,7 +2,7 @@ import { CardContent, CardHeader, FormControl, Grid, InputLabel, MenuItem, Selec
 import Card from '@mui/material/Card';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
-import { addMealplan, getAllMealPlans, getUserMealPlans } from '../../api/mealplans';
+import { addMealplan, getAllMealPlans, getUserMealPlans, updateMealplan } from '../../api/mealplans';
 import DayCard from './DayCard/DayCard';
 import styles from './MealPlans.module.css'
 import Button from '@mui/material/Button'
@@ -22,6 +22,18 @@ const MealPlans = () => {
 
     const updateMealplans = (newMealplans) => {
         setMealplans(newMealplans)
+    }
+
+    const setMealplan = (newMealplan) => {
+        updateMealplan(newMealplan)
+        setCurrentMealplan(newMealplan)
+        let copyMealplans = [...mealplans].map((m) => 
+            m.id === currentMealplan.id ? 
+                newMealplan : 
+                m
+        )
+        console.log(copyMealplans)
+        setMealplans(copyMealplans)
     }
 
     const toggleViewAddPlanModal = () => {
@@ -66,13 +78,13 @@ console.log(currentMealplan)
                                 style={{minWidth:'12em', color:'white', backgroundColor:'gray'}}
                                 labelId='mealplan-select-label'
                                 id='mealplan-select'
-                                value={mealplans.indexOf(currentMealplan)}
+                                value={currentMealplan?.id}
                                 label='Meal Plans'
-                                onChange={(e) => setCurrentMealplan(mealplans[e.target.value])}
+                                onChange={(e) => setCurrentMealplan(mealplans.find(m => m.id === e.target.value))}
                             >
                                 {mealplans.map((p, i) => {
                                     return (
-                                        <MenuItem key={i} value={i}>
+                                        <MenuItem key={i} value={p.id}>
                                             {`${new Date(p.dateStart.seconds * 1000).toLocaleDateString()} - ${new Date(p.dateEnd.seconds * 1000).toLocaleDateString()}`}
                                         </MenuItem>
                                     )
@@ -103,7 +115,7 @@ console.log(currentMealplan)
                                 {currentMealplan.days.map((dayPlan, i) => {
                                     return (
                                         <Grid key={i} item xs={12} md={12/currentMealplan.days.length} className={styles.gridItem}>
-                                            <DayCard meals={dayPlan.meals} date={dayPlan.date} />
+                                            <DayCard meals={dayPlan.meals} date={dayPlan.date} mealplan={currentMealplan} updateMealplan={setMealplan} />
                                         </Grid>
                                     )
                                 })}
@@ -113,7 +125,7 @@ console.log(currentMealplan)
                 </Grid>
             }
             <Grid item xs={12}>
-                <Button onClick={toggleViewAddPlanModal} variant='contained' color='success'>Add Meal Plans</Button>
+                <Button onClick={toggleViewAddPlanModal} variant='contained' color='success'>Add Meal Plan</Button>
             </Grid>
             <AddMealPlanModal viewAddPlanModal={viewAddPlanModal} toggleViewAddPlanModal={toggleViewAddPlanModal} mealplans={mealplans} updateMealplans={updateMealplans} />
         </Grid>
