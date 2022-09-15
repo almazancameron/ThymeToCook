@@ -5,34 +5,61 @@ import {useState} from 'react'
 import { addRecipe } from '../../../api/recipes';
 import { useAuth } from '../../../context/AuthContext';
 
-const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, updateRecipes}) => {
-    const {currentUser} = useAuth()
-    const [newRecipe, setNewRecipe] = useState({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []})
-    const [newIngredient, setNewIngredient] = useState('')
+const AddRecipeModal = ({
+  viewAddRecipeModal,
+  toggleViewAddRecipeModal,
+  recipes,
+  updateRecipes,
+}) => {
+  const { currentUser } = useAuth();
+  const [newRecipe, setNewRecipe] = useState({
+    name: "",
+    ingredients: [],
+    instructions: [],
+    calories: "",
+    prepTime: "",
+    imageURL: "",
+    users: [currentUser.uid],
+  });
+  const [newIngredient, setNewIngredient] = useState("");
+  const [newInstruction, setNewInstruction] = useState('')
 
-    const handleSubmit = async () => {
-        try {
-            let id = await addRecipe(newRecipe)
-            newRecipe.id = id
-            const newRecipes = [...recipes, newRecipe]
-            updateRecipes(newRecipes)
-            setNewRecipe({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []})
-            toggleViewAddRecipeModal()
-        } catch(error) {
-            console.log('Error: ' + error)
-        }
+  const handleSubmit = async () => {
+    try {
+      let id = await addRecipe(newRecipe);
+      newRecipe.id = id;
+      const newRecipes = [...recipes, newRecipe];
+      updateRecipes(newRecipes);
+      setNewRecipe({
+        name: "",
+        ingredients: [],
+        instructions: [],
+        calories: "",
+        prepTime: "",
+        imageURL: "",
+        users: [],
+      });
+      toggleViewAddRecipeModal();
+    } catch (error) {
+      console.log("Error: " + error);
     }
+  }
 
     const handleAddIngredient = () => {
         setNewRecipe({...newRecipe, ingredients: [...newRecipe.ingredients, newIngredient]})
         setNewIngredient('')
     }
 
+    const handleAddInstruction = () => {
+      setNewRecipe({...newRecipe, instructions: [...newRecipe.instructions, newInstruction]})
+      setNewInstruction('')
+  }
+
     return (
         <Modal
             open={viewAddRecipeModal}
             onClose={() => { 
-                setNewRecipe({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []}); 
+                setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []}); 
                 toggleViewAddRecipeModal();
             }}
         >
@@ -41,7 +68,7 @@ const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, 
                     className={styles.closeButton} 
                     color='error' 
                     onClick={() => { 
-                        setNewRecipe({name: '', ingredients: [], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []}); 
+                        setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []}); 
                         toggleViewAddRecipeModal();
                     }}
                 >
@@ -60,9 +87,33 @@ const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, 
                             onChange={(e) => setNewRecipe({...newRecipe, name: e.target.value})} 
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
+                        {newRecipe.instructions?.length > 0 &&
+                            <ol style={{marginTop:0}}>
+                                {newRecipe.instructions?.map((instruction, i) => (
+                                    <li key={i}>{instruction}</li>
+                                ))}
+                            </ol>
+                        }
+                        <div className='d-flex'>
+                            <TextField 
+                                fullWidth
+                                label='Instructions' 
+                                variant='outlined' 
+                                value={newInstruction} 
+                                onChange={(e) => setNewInstruction(e.target.value)} 
+                                onKeyDown={(e) => {
+                                    if(e.key.toUpperCase() === 'ENTER') {
+                                        handleAddInstruction()
+                                    }
+                                }}
+                            />
+                            <Button onClick={handleAddInstruction} sx={{marginLeft:'2em'}} variant='contained' color='success'>Add</Button>
+                        </div>
+                    </Grid>
+                    <Grid item xs={6}>
                         {newRecipe.ingredients?.length > 0 &&
-                            <ul>
+                            <ul style={{marginTop:0}}>
                                 {newRecipe.ingredients?.map((ingredient, i) => (
                                     <li key={i}>{ingredient}</li>
                                 ))}
@@ -105,19 +156,23 @@ const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, 
                         />
                         {/* Change this to a slider from 10 minutes - 120 minutes? */}
                     </Grid>
-                    <Grid item xs={12}>
-                        {newRecipe.imageURL.length > 0 &&
-                            <div className={styles.modalImage}>
-                                <img src={newRecipe.imageURL} alt='Recipe Image' className={styles.modalImage} />
-                            </div>
-                        }
+                    <Grid item xs={6} sx={{display:'flex'}}>
+                        
                         <TextField
+                            sx={{alignSelf:'flex-end'}}
                             fullWidth
                             label='Image URL'
                             variant='outlined'
                             value={newRecipe.imageURL}
                             onChange={(e) => setNewRecipe({...newRecipe, imageURL: e.target.value})}
                         />
+                    </Grid>
+                    <Grid item xs={6}>
+                      {newRecipe.imageURL.length > 0 &&
+                        <div className={styles.modalImage}>
+                            <img src={newRecipe.imageURL} alt='Recipe Image' className={styles.modalImage} />
+                        </div>
+                      }
                     </Grid>
                     <Grid item xs={12}>
                         <Button onClick={handleSubmit} color='success'>Submit</Button>
@@ -128,4 +183,4 @@ const AddRecipeModal = ({viewAddRecipeModal, toggleViewAddRecipeModal, recipes, 
     )
 }
 
-export default AddRecipeModal
+export default AddRecipeModal;
