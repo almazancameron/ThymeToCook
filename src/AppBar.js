@@ -5,8 +5,6 @@ import {
   Container,
   Grid,
   MenuItem,
-  MenuList,
-  Paper,
   Toolbar,
   Typography,
   Tooltip,
