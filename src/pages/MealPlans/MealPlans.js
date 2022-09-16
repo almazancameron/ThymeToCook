@@ -1,4 +1,4 @@
-import { CardContent, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { CardContent, CardHeader, Container, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
@@ -57,13 +57,14 @@ const MealPlans = () => {
 console.log(currentMealplan)
     return (
         <Grid container spacing={2}>
-            
-            <Grid className={styles.navRow} item xs={12}>
-                <NavBar/>
+            <NavBar/>
+            <Grid className={styles.navRow} item xs={12} >
+                
                 {/* <Typography variant='h3' component='span' className={styles.navLogo}>Navbar</Typography> */}
                 
                 {mealplans.length > 0 &&
                     <>
+                    <Container justify="center">
                         <Button 
                             onClick={() => {
                                 let prevIndex = mealplans.indexOf(currentMealplan) === 0 ? mealplans.length-1 : mealplans.indexOf(currentMealplan)-1
@@ -73,8 +74,9 @@ console.log(currentMealplan)
                         >
                             <ArrowBackIosNewIcon />
                         </Button>
+                        
                         <FormControl className={styles.navSelect}>
-                            <InputLabel id='mealplan-select-label'>Meal Plans</InputLabel>
+                            {/* <InputLabel id='mealplan-select-label'>Meal Plans</InputLabel> */}
                             <Select
                                 color='success'
                                 style={{minWidth:'12em', color:'white', backgroundColor:'gray'}}
@@ -93,6 +95,7 @@ console.log(currentMealplan)
                                 })}
                             </Select>
                         </FormControl>
+                        
                         <Button 
                             onClick={() => {
                                 let nextIndex = mealplans.indexOf(currentMealplan) === mealplans.length-1 ? 0 : mealplans.indexOf(currentMealplan)+1
@@ -102,7 +105,9 @@ console.log(currentMealplan)
                         >
                             <ArrowForwardIosIcon />
                         </Button>
+                        </Container>
                     </>
+                    
                 }
             </Grid>
             {currentMealplan &&
