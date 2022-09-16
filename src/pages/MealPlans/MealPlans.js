@@ -57,9 +57,11 @@ const MealPlans = () => {
 console.log(currentMealplan)
     return (
         <Grid container spacing={2}>
-            <NavBar/>
+            
             <Grid className={styles.navRow} item xs={12}>
-                <Typography variant='h3' component='span' className={styles.navLogo}>Navbar</Typography>
+                <NavBar/>
+                {/* <Typography variant='h3' component='span' className={styles.navLogo}>Navbar</Typography> */}
+                
                 {mealplans.length > 0 &&
                     <>
                         <Button 
