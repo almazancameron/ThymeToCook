@@ -13,7 +13,8 @@ import { useState } from "react";
 import { addRecipe } from "../../../api/recipes";
 import { useAuth } from "../../../context/AuthContext";
 
-const AddRecipeModal = ({
+const /* `AddRecipe` is a modal that allows a user to add a recipe to the database. */
+AddRecipeModal = ({
   viewAddRecipeModal,
   toggleViewAddRecipeModal,
   recipes,
@@ -27,11 +28,11 @@ const AddRecipeModal = ({
     calories: "",
     prepTime: "",
     imageURL: "",
-    users: currentUser?.id ? [currentUser.id] : [],
+    users: currentUser?.uid ? [currentUser.uid] : [],
   });
   const [newIngredient, setNewIngredient] = useState("");
   const [newInstruction, setNewInstruction] = useState('')
-
+console.log(currentUser?.uid)
   const handleSubmit = async () => {
     try {
       let id = await addRecipe(newRecipe);
@@ -45,7 +46,7 @@ const AddRecipeModal = ({
         calories: "",
         prepTime: "",
         imageURL: "",
-        users: currentUser?.id ? [currentUser.id] : [],
+        users: currentUser?.uid ? [currentUser.uid] : [],
       });
       toggleViewAddRecipeModal();
     } catch (error) {
@@ -67,7 +68,7 @@ const AddRecipeModal = ({
         <Modal
             open={viewAddRecipeModal}
             onClose={() => { 
-                setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []}); 
+                setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: '', imageURL: '', users: currentUser?.uid ? [currentUser.uid] : []}); 
                 toggleViewAddRecipeModal();
             }}
         >
@@ -76,7 +77,7 @@ const AddRecipeModal = ({
                     className={styles.closeButton} 
                     color='error' 
                     onClick={() => { 
-                        setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: '', imageURL: '', users: currentUser?.id ? [currentUser.id] : []}); 
+                        setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: '', imageURL: '', users: currentUser?.uid ? [currentUser.uid] : []}); 
                         toggleViewAddRecipeModal();
                     }}
                 >
