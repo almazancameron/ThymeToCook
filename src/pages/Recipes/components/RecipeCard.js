@@ -3,7 +3,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import HeartIcon from "../assets/iconheartplus.png";
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import styles from "../Recipes.module.css";
 import { Link } from "react-router-dom";
@@ -49,7 +49,7 @@ const RecipeCard = ({ recipe, recipes, updateRecipes, variant = "none" }) => {
         </div>
         <div className={styles.recipeFooter}>
           <Typography className="recipe-description" component="span">
-            <Link to={`${recipe.id}`}>View Recipe</Link> &nbsp;
+            <Button variant="contained" href={`${recipe.id}`} sx={{ fontSize: '12px' }}>View Recipe</Button> &nbsp;
           </Typography>
           {variant === "heart" && (
             <IconButton>
