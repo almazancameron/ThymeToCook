@@ -27,7 +27,7 @@ const AddRecipeModal = ({
     calories: "",
     prepTime: "",
     imageURL: "",
-    users: [currentUser.uid],
+    users: currentUser?.id ? [currentUser.id] : [],
   });
   const [newIngredient, setNewIngredient] = useState("");
   const [newInstruction, setNewInstruction] = useState('')
@@ -45,7 +45,7 @@ const AddRecipeModal = ({
         calories: "",
         prepTime: "",
         imageURL: "",
-        users: [],
+        users: currentUser?.id ? [currentUser.id] : [],
       });
       toggleViewAddRecipeModal();
     } catch (error) {
