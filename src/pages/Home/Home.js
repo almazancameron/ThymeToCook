@@ -64,7 +64,7 @@ export default function Home() {
               }}
             >
               <Typography component="h1" variant="h3" color="inherit" paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Start cooking with us, and you'll save thyme.
               </Typography>
             </Box>
           </Grid>
