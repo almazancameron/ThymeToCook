@@ -5,8 +5,6 @@ import {
   Container,
   Grid,
   MenuItem,
-  MenuList,
-  Paper,
   Toolbar,
   Typography,
   Tooltip,
@@ -73,9 +71,9 @@ export default function NavBar() {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{color: "primary"}}>
       <Container maxwidth="x1">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters= "true">
           <RamenDiningIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />

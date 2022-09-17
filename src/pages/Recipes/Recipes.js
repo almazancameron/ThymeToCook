@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import HeartIcon from "./assets/iconheartplus.png";
 import Grid from '@mui/material/Grid'
 import styles from "./Recipes.module.css";
-import ReadMoreReact from 'read-more-react';
 import RecipeCard from "./components/RecipeCard";
 import { getAllRecipes, getUserRecipes } from "../../api/recipes";
 import Button from '@mui/material/Button'
@@ -49,8 +42,8 @@ export default function RecipesPage() {
       <Grid container spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
         {recipes.map((recipe) => {
           return (
-            <Grid item xs={2.4} className={styles.recipeCard}>
-              <RecipeCard key={recipe.id} recipe={recipe} recipes={recipes} updateRecipes={updateRecipes} />
+            <Grid item xs={2} className={styles.recipeCard}>
+              <RecipeCard key={recipe.id} recipe={recipe} />
             </Grid>
           )
         })}
