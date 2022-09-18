@@ -73,7 +73,7 @@ export default function NavBar() {
   return (
     <AppBar position="static" sx={{color: "primary"}}>
       <Container maxwidth="x1">
-        <Toolbar disableGutters= "true">
+        <Toolbar disableGutters>
           <RamenDiningIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />
@@ -116,7 +116,7 @@ export default function NavBar() {
             </MenuItem>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            {auth.currentUser.email}
+            {auth.currentUser?.email}&nbsp;
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Face2Icon
@@ -162,7 +162,7 @@ export default function NavBar() {
                 <Typography
                   textAlign="center"
                   onClick={handleClick}
-                  id="signup"
+                  id="signout"
                 >
                   Sign Out
                 </Typography>

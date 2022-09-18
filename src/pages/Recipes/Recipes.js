@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import AddRecipeModal from "./components/AddRecipeModal";
 import NavBar from "../../AppBar";
 import { useAuth } from "../../context/AuthContext";
-
+import { Card, CardContent } from "@mui/material";
 
 export default function RecipesPage() {
     const {currentUser} = useAuth()
@@ -39,16 +39,22 @@ export default function RecipesPage() {
     <div className={styles.recipeName}>
       <NavBar/>
       <nav className={styles.recipeHeader}><h1>Saved Recipes</h1></nav>
-      <Grid container spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
+      <Grid container padding={2} spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
         {recipes.map((recipe) => {
           return (
-            <Grid item xs={2} className={styles.recipeCard}>
+            <Grid item xs={2}>
               <RecipeCard key={recipe.id} recipe={recipe} />
             </Grid>
           )
         })}
+        <Grid item xs={2} className={styles.recipeCard}>
+          <Card sx={{ height: "100%" }} className={styles.recipeCard}>
+            <CardContent>
+              <Button sx={{height:'100%'}} onClick={toggleViewAddRecipeModal} color='success'>Add Recipe</Button>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-      <Button onClick={toggleViewAddRecipeModal} color='success'>Add Recipes</Button>
       <AddRecipeModal viewAddRecipeModal={viewAddRecipeModal} toggleViewAddRecipeModal={toggleViewAddRecipeModal} recipes={recipes} updateRecipes={updateRecipes}  />
     </div>
   );

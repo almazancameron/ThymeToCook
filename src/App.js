@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import "./App.css";
 import Signup from "./pages/Signup/Signup";
@@ -21,7 +21,6 @@ function App() {
         }
     }
   })
-
   
   return (
     

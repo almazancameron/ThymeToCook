@@ -17,7 +17,7 @@ import NavBar from "../../AppBar";
 import RandomRecipes from "./RandomRecipes"
 import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import Face2Icon from "@mui/icons-material/Face2";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import Image from "../../images/hero--image.jpg";
 import Recipes from "./RandomRecipes";
@@ -26,6 +26,13 @@ import { signOut } from "firebase/auth";
 
 
 export default function Home() {
+  const { currentUser } = useAuth()
+
+  if (!currentUser?.email) {
+    return (
+      <Navigate to='/login' />
+    )
+  }
   
 
   return (
