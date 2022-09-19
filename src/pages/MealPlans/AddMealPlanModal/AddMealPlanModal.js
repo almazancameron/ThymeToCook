@@ -14,7 +14,7 @@ import { useAuth } from "../../../context/AuthContext";
 
 const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal, mealplans, updateMealplans }) => {
     const { currentUser } = useAuth()
-    const [newMealplan, setNewMealplan] = useState({dateStart: null, dateEnd: null, days: [], userId: currentUser.uid})
+    const [newMealplan, setNewMealplan] = useState({dateStart: null, dateEnd: null, days: [], userId: currentUser.uid, name:''})
     const daysLength = useMemo(() => {
         return ((newMealplan.dateEnd?.seconds + 86400) - newMealplan.dateStart?.seconds) / (60 * 60 * 24)
     }, [newMealplan?.dateEnd, newMealplan?.dateStart])
@@ -54,6 +54,9 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal, mealplans,
                     Add a Meal Plan
                 </Typography>
                 <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField value={newMealplan.name} onChange={(e) => setNewMealplan({...newMealplan, name:e.target.value})} label="Meal Plan Name" fullWidth />
+                    </Grid>
                     <Grid item xs={6}>
                         <LocalizationProvider dateAdapter={AdapterMoment}>
                             <DesktopDatePicker

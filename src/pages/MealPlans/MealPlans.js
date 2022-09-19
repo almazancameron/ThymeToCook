@@ -55,11 +55,17 @@ const MealPlans = () => {
         getMealPlans()
     }, [])
 
+    useEffect(() => {
+        if (!currentMealplan && mealplans?.length > 0) {
+            setCurrentMealplan(mealplans[0])
+        }
+    }, [mealplans])
+
     return (
         <>
             <NavBar/>
             <Grid container spacing={2}>
-                {currentMealplan &&
+                {currentMealplan ?
                     <Grid item xs={12}>
                         <Card>
                             <CardHeader className={styles.planHeader} title={<MealPlanDropdown mealplans={mealplans} setCurrentMealplan={setCurrentMealplan} currentMealplan={currentMealplan} />}>
@@ -77,6 +83,11 @@ const MealPlans = () => {
                                 </Grid>
                             </CardContent>
                         </Card>
+                    </Grid> :
+                    <Grid item xs={12}>
+                        <Typography variant='h3'>
+                            You have no meal plans to display!
+                        </Typography>
                     </Grid>
                 }
                 <Grid item xs={12}>

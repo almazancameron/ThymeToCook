@@ -27,7 +27,7 @@ const MealPlanDropdown = ({mealplans, currentMealplan, setCurrentMealplan}) => {
                     {mealplans.map((p, i) => {
                         return (
                             <MenuItem key={i} value={p.id}>
-                                {`${new Date(p.dateStart.seconds * 1000).toLocaleDateString()} - ${new Date(p.dateEnd.seconds * 1000).toLocaleDateString()}`}
+                                {`${p?.name}: ${new Date(p.dateStart.seconds * 1000).toLocaleDateString()} - ${new Date(p.dateEnd.seconds * 1000).toLocaleDateString()}`}
                             </MenuItem>
                         )
                     })}
