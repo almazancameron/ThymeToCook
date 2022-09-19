@@ -326,6 +326,7 @@ return (
             </Grid>
             <Grid item xs={12}>
                 <Button onClick={handleSubmit} color='success'>Submit</Button>
+                <Button color='error' onClick={toggleEditState}>Cancel</Button>
             </Grid>
         </Grid>
     </Box>
