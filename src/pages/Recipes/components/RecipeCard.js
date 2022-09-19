@@ -7,7 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Button, IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import styles from "../Recipes.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { updateCurrentUser } from "firebase/auth";
 import { useAuth } from "../../../context/AuthContext"
@@ -16,13 +16,14 @@ import { updateRecipe } from "../../../api/recipes";
 const RecipeCard = ({ recipe, recipes, updateRecipes, variant = "none" }) => {
   const { name, ingredients, imageURL, users } = recipe; //calories, time to cook, rating, users, imageURL
   const { currentUser } = useAuth();
+  const navigate = useNavigate()
 
   async function removeRecipeFromUser(){
     try {
       const copyRecipe = {...recipe, users: recipe.users.filter((u) => u !== currentUser.uid)}
       await updateRecipe(copyRecipe)
-      let copyRecipes = recipes.filter((r) => r.id !== recipe.id)
-      updateRecipes(copyRecipes)
+      let copyRecipes = variant === 'heart' ? recipes.map((r) => r.id === recipe.id ? copyRecipe : r) : recipes.filter((r) => r.id !== recipe.id)
+      updateRecipes(copyRecipes) 
     } catch (error) {
       console.log(error)
     }
@@ -61,11 +62,11 @@ const RecipeCard = ({ recipe, recipes, updateRecipes, variant = "none" }) => {
         </div>
         <div className={styles.recipeFooter}>
           <Typography className="recipe-description" component="span">
-            <Button variant="contained" href={`/recipes/${recipe.id}`} sx={{ fontSize: '12px' }}>View Recipe</Button> &nbsp;
+            <Button variant="contained" onClick={() => navigate(`/recipes/${recipe.id}`)} sx={{ fontSize: '12px' }}>View Recipe</Button> &nbsp;
           </Typography>
           {variant === "heart" && 
             <IconButton
-              onClick={addRecipeToUser}
+              onClick={() => users.includes(currentUser.uid) ? removeRecipeFromUser() : addRecipeToUser()}
               alt="Add to my recipes"
             >
               {users.includes(currentUser.uid) ? <FavoriteIcon /> : <FavoriteBorderIcon />}

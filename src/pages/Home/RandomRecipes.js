@@ -38,9 +38,9 @@ export default function RandomRecipes() {
           alignItems="stretch"
           padding={2}
         >
-          {recipes.map((recipe) => {
+          {recipes.map((recipe, i) => {
             return (
-              <Grid item xs={2} className={styles.recipeCard}>
+              <Grid key={i} item xs={2} className={styles.recipeCard}>
                 <RecipeCard variant='heart' key={recipe.id} recipe={recipe} recipes={recipes} updateRecipes={updateRecipes} />
               </Grid>
             );

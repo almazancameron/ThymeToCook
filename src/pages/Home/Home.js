@@ -23,21 +23,23 @@ import Image from "../../images/hero--image.jpg";
 import Recipes from "./RandomRecipes";
 import { useAuth } from "../../context/AuthContext";
 import { signOut } from "firebase/auth";
+import { useGrocery } from "../../context/GroceryContext";
 
 
 export default function Home() {
   const { currentUser } = useAuth()
+  const { groceryList } = useGrocery()
 
   if (!currentUser?.email) {
     return (
       <Navigate to='/login' />
     )
   }
-  
+  console.log(groceryList)
 
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <Paper
         sx={{
           position: "relative",

@@ -28,8 +28,6 @@ const DayCard = ({meals, date, mealplan, updateMealplan}) => {
     }, [])
 
     const toggleEditState = () => {
-        setSelectedRecipe(null)
-        setMeal('')
         setEditState(!editState)
     }
 
@@ -52,6 +50,8 @@ const DayCard = ({meals, date, mealplan, updateMealplan}) => {
                 d
         )
         updateMealplan(copyMealplan)
+        setSelectedRecipe(null)
+        setMeal('')
         toggleEditState()
     }
 
@@ -61,7 +61,15 @@ const DayCard = ({meals, date, mealplan, updateMealplan}) => {
             <CardContent sx={{display:'flex', flexDirection:'column'}}>
                 {!editState && meals.map((meal, i) => {
                     return (
-                        <MealCard key={i} meal={meal} />
+                        <MealCard 
+                            key={i} 
+                            index={i} 
+                            meal={meal} 
+                            recipes={recipes} 
+                            mealplan={mealplan}
+                            updateMealplan={updateMealplan}
+                            date={date}
+                        />
                     )
                 })}
                 {editState &&
@@ -85,12 +93,19 @@ const DayCard = ({meals, date, mealplan, updateMealplan}) => {
                             </Select>
                         </FormControl>
                         <TextField id="outlined-basic" label="Meal" variant="outlined" onChange={(e) => setMeal(e.target.value)} />
+                        <Button onClick={handleSave} sx={{marginTop:'0.5em'}}>Save</Button>
                     </>
                 }
-                {editState &&
-                    <Button onClick={handleSave} sx={{marginTop:'0.5em'}}>Save</Button>
-                }
-                <Button onClick={toggleEditState} color={editState ? "error" : "success"}>{editState ? 'Cancel' : 'Add meal'}</Button>
+                <Button 
+                    onClick={() => {
+                        toggleEditState(); 
+                        setSelectedRecipe(null); 
+                        setMeal('');
+                    }} 
+                    color={editState ? "error" : "success"}
+                >
+                    {editState ? 'Cancel' : 'Add meal'}
+                </Button>
             </CardContent>
         </Card>
     )

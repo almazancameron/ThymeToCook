@@ -17,6 +17,7 @@ import Face2Icon from "@mui/icons-material/Face2";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../src/context/AuthContext";
+import { useGrocery } from "./context/GroceryContext";
 
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -24,7 +25,8 @@ export default function NavBar() {
   const navigate = useNavigate();
   const auth = useAuth();
   const { logOut } = useAuth();
-
+  const {toggleViewGroceryModal} = useGrocery();
+  
   const signUserOut = async () => {
     console.log(auth.currentUser.email);
     const result = await logOut(auth.currentUser);
@@ -53,7 +55,7 @@ export default function NavBar() {
         navigate("/");
         break;
       case "grocery":
-        navigate("/");
+        toggleViewGroceryModal();
         break;
       case "login":
         navigate("/login");
@@ -81,7 +83,7 @@ export default function NavBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            onClick={() => navigate('/')}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -90,6 +92,7 @@ export default function NavBar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor:'pointer'
             }}
           >
             ThymeToCook

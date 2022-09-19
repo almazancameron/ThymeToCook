@@ -40,10 +40,10 @@ export default function RecipesPage() {
       <NavBar/>
       <nav className={styles.recipeHeader}><h1>Saved Recipes</h1></nav>
       <Grid container padding={2} spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
-        {recipes.map((recipe) => {
+        {recipes.map((recipe, i) => {
           return (
-            <Grid item xs={2}>
-              <RecipeCard key={recipe.id} recipe={recipe} />
+            <Grid key={i} item xs={2}>
+              <RecipeCard recipe={recipe} />
             </Grid>
           )
         })}

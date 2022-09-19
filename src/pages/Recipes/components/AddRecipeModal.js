@@ -6,12 +6,14 @@ import {
   TextField,
   Grid,
   InputAdornment,
+  Slider,
 } from "@mui/material";
 import styles from "../Recipes.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { addRecipe } from "../../../api/recipes";
 import { useAuth } from "../../../context/AuthContext";
+import { Label } from "@mui/icons-material";
 
 const /* `AddRecipe` is a modal that allows a user to add a recipe to the database. */
 AddRecipeModal = ({
@@ -26,7 +28,7 @@ AddRecipeModal = ({
     ingredients: [],
     instructions: [],
     calories: "",
-    prepTime: "",
+    prepTime: 0,
     imageURL: "",
     users: currentUser?.uid ? [currentUser.uid] : [],
   });
@@ -36,6 +38,7 @@ console.log(currentUser?.uid)
   const handleSubmit = async () => {
     try {
       let id = await addRecipe(newRecipe);
+      newRecipe.prepTime = newRecipe.prepTime === 180 ? '180+ mins' : newRecipe.prepTime + ' mins'
       newRecipe.id = id;
       const newRecipes = [...recipes, newRecipe];
       updateRecipes(newRecipes);
@@ -44,7 +47,7 @@ console.log(currentUser?.uid)
         ingredients: [],
         instructions: [],
         calories: "",
-        prepTime: "",
+        prepTime: 0,
         imageURL: "",
         users: currentUser?.uid ? [currentUser.uid] : [],
       });
@@ -68,7 +71,7 @@ console.log(currentUser?.uid)
         <Modal
             open={viewAddRecipeModal}
             onClose={() => { 
-                setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: '', imageURL: '', users: currentUser?.uid ? [currentUser.uid] : []}); 
+                setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: 0, imageURL: '', users: currentUser?.uid ? [currentUser.uid] : []}); 
                 toggleViewAddRecipeModal();
             }}
         >
@@ -77,7 +80,7 @@ console.log(currentUser?.uid)
                     className={styles.closeButton} 
                     color='error' 
                     onClick={() => { 
-                        setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: '', imageURL: '', users: currentUser?.uid ? [currentUser.uid] : []}); 
+                        setNewRecipe({name: '', ingredients: [], instructions:[], calories: '', prepTime: 0, imageURL: '', users: currentUser?.uid ? [currentUser.uid] : []}); 
                         toggleViewAddRecipeModal();
                     }}
                 >
@@ -156,10 +159,15 @@ console.log(currentUser?.uid)
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField
-                            fullWidth
+                        <Typography>
+                            Prep Time: {newRecipe.prepTime === 180 ? '180+' : newRecipe.prepTime} minutes
+                        </Typography>
+                        <Slider
                             label='Prep Time'
                             variant='outlined'
+                            step={10}
+                            min={0}
+                            max={180}
                             value={newRecipe.prepTime}
                             onChange={(e) => setNewRecipe({...newRecipe, prepTime: e.target.value})}
                         />
