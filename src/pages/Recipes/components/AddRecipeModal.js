@@ -7,6 +7,10 @@ import {
   Grid,
   InputAdornment,
   Slider,
+  List,
+  ListItemButton,
+  ListItemText,
+  MenuItem,
 } from "@mui/material";
 import styles from "../Recipes.module.css";
 import CloseIcon from "@mui/icons-material/Close";
@@ -67,6 +71,18 @@ console.log(currentUser?.uid)
       setNewInstruction('')
   }
 
+  const removeIngredient = (idx) => {
+    let copyNewRecipe = {...newRecipe}
+    copyNewRecipe.ingredients.splice(idx, 1)
+    setNewRecipe(copyNewRecipe)
+  }
+
+  const removeInstruction = (idx) => {
+    let copyNewRecipe = {...newRecipe}
+    copyNewRecipe.instructions.splice(idx, 1)
+    setNewRecipe(copyNewRecipe)
+  }
+
     return (
         <Modal
             open={viewAddRecipeModal}
@@ -101,11 +117,22 @@ console.log(currentUser?.uid)
                     </Grid>
                     <Grid item xs={6}>
                         {newRecipe.instructions?.length > 0 &&
-                            <ol style={{marginTop:0}}>
+                            <List style={{marginTop:0}}>
                                 {newRecipe.instructions?.map((instruction, i) => (
-                                    <li key={i}>{instruction}</li>
+                                    <ListItemButton 
+                                    style={{whiteSpace: 'normal'}} 
+                                    onClick={() => removeInstruction(i)} 
+                                    className={styles.hoverStrike} 
+                                    component={MenuItem} 
+                                    key={i}
+                                    >
+                                    <ListItemText 
+                                        sx={{flexWrap:'wrap', wordWrap:'wrap'}}
+                                        primary={(i+1) + '. ' + instruction}
+                                    />
+                                    </ListItemButton>
                                 ))}
-                            </ol>
+                            </List>
                         }
                         <div className='d-flex'>
                             <TextField 
@@ -125,11 +152,22 @@ console.log(currentUser?.uid)
                     </Grid>
                     <Grid item xs={6}>
                         {newRecipe.ingredients?.length > 0 &&
-                            <ul style={{marginTop:0}}>
+                            <List style={{marginTop:0}}>
                                 {newRecipe.ingredients?.map((ingredient, i) => (
-                                    <li key={i}>{ingredient}</li>
+                                    <ListItemButton 
+                                    style={{whiteSpace: 'normal'}} 
+                                    onClick={() => removeIngredient(i)} 
+                                    className={styles.hoverStrike} 
+                                    component={MenuItem} 
+                                    key={i}
+                                    >
+                                    <ListItemText 
+                                        sx={{flexWrap:'wrap', wordWrap:'wrap'}}
+                                        primary={ingredient}
+                                    />
+                                    </ListItemButton>
                                 ))}
-                            </ul>
+                            </List>
                         }
                         <div className='d-flex'>
                             <TextField 

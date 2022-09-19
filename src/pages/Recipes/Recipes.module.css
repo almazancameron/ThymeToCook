@@ -64,3 +64,11 @@
     object-fit:scale-down;
     max-height:20vh
 }
+
+.hoverStrike {
+    padding:5px;
+}
+
+.hoverStrike:hover {
+    text-decoration:line-through !important;
+}

@@ -15,17 +15,15 @@
     align-items: center;
     position: relative;
     margin-left: auto;
-    width: 50vh;
-    height:40vh;
+    max-height:50vh;
     margin-right: auto;
-  
+    object-fit:scale-down
   }
  
   
   .maincontainer {
-    width: 600px;
+    width: 50%;
     height: min-content;
-
     padding: 20px;
     margin: 20px;
  
@@ -53,18 +51,16 @@
   .itemlist {
     display: flex;
     flex-direction: column;
+    margin-top:1em;
+    padding-top:0
   }
   
   .itemcontainer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap:1em;
     padding: 10px 0 10px 0;
-
-  }
-  
-  .itemname {
-    cursor: pointer;
   }
   
   .item-name svg {
@@ -97,3 +93,24 @@
     text-decoration: line-through;
   }
   
+  .modalImage {
+    display:flex;
+    justify-content:center;
+}
+
+.modalImage > img {
+    object-fit:scale-down;
+    max-height:20vh
+}
+
+.modalBody {
+  padding: 3em;
+}
+
+.hoverStrike {
+  padding:5px;
+}
+
+.hoverStrike:hover {
+  text-decoration:line-through !important;
+}
