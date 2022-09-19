@@ -9,9 +9,12 @@ import { TextField } from "@mui/material";
 import * as firestore from 'firebase/firestore'
 import { useMemo } from "react";
 import { addMealplan } from "../../../api/mealplans";
+import { useAuth } from "../../../context/AuthContext";
+
 
 const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal, mealplans, updateMealplans }) => {
-    const [newMealplan, setNewMealplan] = useState({dateStart: null, dateEnd: null, days: []})
+    const { currentUser } = useAuth()
+    const [newMealplan, setNewMealplan] = useState({dateStart: null, dateEnd: null, days: [], userId: currentUser.uid})
     const daysLength = useMemo(() => {
         return ((newMealplan.dateEnd?.seconds + 86400) - newMealplan.dateStart?.seconds) / (60 * 60 * 24)
     }, [newMealplan?.dateEnd, newMealplan?.dateStart])

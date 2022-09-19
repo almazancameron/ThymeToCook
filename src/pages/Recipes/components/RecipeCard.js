@@ -2,11 +2,12 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import HeartIcon from "../assets/iconheartplus.png";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Button, IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import styles from "../Recipes.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { updateCurrentUser } from "firebase/auth";
 import { useAuth } from "../../../context/AuthContext"
@@ -15,12 +16,24 @@ import { updateRecipe } from "../../../api/recipes";
 const RecipeCard = ({ recipe, recipes, updateRecipes, variant = "none" }) => {
   const { name, ingredients, imageURL, users } = recipe; //calories, time to cook, rating, users, imageURL
   const { currentUser } = useAuth();
+  const navigate = useNavigate()
 
   async function removeRecipeFromUser(){
     try {
       const copyRecipe = {...recipe, users: recipe.users.filter((u) => u !== currentUser.uid)}
       await updateRecipe(copyRecipe)
-      let copyRecipes = recipes.filter((r) => r.id !== recipe.id)
+      let copyRecipes = variant === 'heart' ? recipes.map((r) => r.id === recipe.id ? copyRecipe : r) : recipes.filter((r) => r.id !== recipe.id)
+      updateRecipes(copyRecipes) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function addRecipeToUser(){
+    try {
+      const copyRecipe = {...recipe, users: [...recipe.users, currentUser.uid]}
+      await updateRecipe(copyRecipe)
+      let copyRecipes = recipes.map((r) => r.id === recipe.id ? copyRecipe : r)
       updateRecipes(copyRecipes)
     } catch (error) {
       console.log(error)
@@ -49,19 +62,24 @@ const RecipeCard = ({ recipe, recipes, updateRecipes, variant = "none" }) => {
         </div>
         <div className={styles.recipeFooter}>
           <Typography className="recipe-description" component="span">
-            <Button variant="contained" href={`${recipe.id}`} sx={{ fontSize: '12px' }}>View Recipe</Button> &nbsp;
+            <Button variant="contained" onClick={() => navigate(`/recipes/${recipe.id}`)} sx={{ fontSize: '12px' }}>View Recipe</Button> &nbsp;
           </Typography>
-          {variant === "heart" && (
-            <IconButton>
-              <HeartIcon />
+          {variant === "heart" && 
+            <IconButton
+              onClick={() => users.includes(currentUser.uid) ? removeRecipeFromUser() : addRecipeToUser()}
+              alt="Add to my recipes"
+            >
+              {users.includes(currentUser.uid) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
-          )}
-          <IconButton
-            onClick={removeRecipeFromUser}
-            alt="Remove from my recipes"
-          >
-            <DeleteOutlineIcon />
-          </IconButton>
+          }
+          {variant !== 'heart' &&
+            <IconButton
+              onClick={removeRecipeFromUser}
+              alt="Remove from my recipes"
+            >
+              <DeleteOutlineIcon />
+            </IconButton>
+          }
         </div>
       </CardContent>
     </Card>

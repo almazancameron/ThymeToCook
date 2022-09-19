@@ -17,20 +17,29 @@ import NavBar from "../../AppBar";
 import RandomRecipes from "./RandomRecipes"
 import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import Face2Icon from "@mui/icons-material/Face2";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import Image from "../../images/hero--image.jpg";
 import Recipes from "./RandomRecipes";
 import { useAuth } from "../../context/AuthContext";
 import { signOut } from "firebase/auth";
+import { useGrocery } from "../../context/GroceryContext";
 
 
 export default function Home() {
-  
+  const { currentUser } = useAuth()
+  const { groceryList } = useGrocery()
+
+  if (!currentUser?.email) {
+    return (
+      <Navigate to='/login' />
+    )
+  }
+  console.log(groceryList)
 
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <Paper
         sx={{
           position: "relative",
