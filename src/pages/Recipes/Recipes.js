@@ -43,7 +43,7 @@ export default function RecipesPage() {
         {recipes.map((recipe, i) => {
           return (
             <Grid key={i} item xs={2}>
-              <RecipeCard recipe={recipe} />
+              <RecipeCard recipe={recipe} recipes={recipes} updateRecipes={updateRecipes} />
             </Grid>
           )
         })}
