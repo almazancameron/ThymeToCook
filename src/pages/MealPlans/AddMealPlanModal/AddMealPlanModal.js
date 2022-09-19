@@ -24,6 +24,7 @@ const AddMealPlanModal = ({ viewAddPlanModal, toggleViewAddPlanModal, mealplans,
         for (let i = newMealplan.dateEnd?.seconds; i > newMealplan.dateStart?.seconds - 86400; i -= 86400) {
             newMealplan.days.push({date: firestore.Timestamp.fromDate(new Date(i*1000)), meals: []})
         }
+        newMealplan.days.reverse()
         let id = await addMealplan(newMealplan)
         newMealplan.id = id
         let copyMealplans = [...mealplans, newMealplan]
