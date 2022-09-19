@@ -42,7 +42,7 @@ export default function RecipesPage() {
       <Grid container padding={2} spacing={2} className={styles.recipeGrid} direction='row' alignItems="stretch">
         {recipes.map((recipe, i) => {
           return (
-            <Grid key={i} item xs={2}>
+            <Grid key={i} item xs={6} lg={2}>
               <RecipeCard recipe={recipe} recipes={recipes} updateRecipes={updateRecipes} />
             </Grid>
           )
