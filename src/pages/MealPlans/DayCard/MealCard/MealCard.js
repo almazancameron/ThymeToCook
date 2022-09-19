@@ -6,6 +6,7 @@ import { getRecipe } from "../../../../api/recipes"
 import {Link} from 'react-router-dom'
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import EditIcon from '@mui/icons-material/Edit';
+import { Delete } from "@mui/icons-material"
 
 const MealCard = ({meal, index, recipes, mealplan, updateMealplan, date}) => {
     const [editMeal, setEditMeal] = useState(false)
@@ -54,6 +55,19 @@ const MealCard = ({meal, index, recipes, mealplan, updateMealplan, date}) => {
         toggleEditMeal()
     }
 
+    const handleRemoveMeal = () => {
+        let copyMealplan = {...mealplan}
+        copyMealplan.days = copyMealplan.days.map((d) => 
+            d.date === date ? 
+                {
+                    ...d, 
+                    meals: [...d.meals].filter((m, i) => i !== index)
+                } :
+                d
+        )
+        updateMealplan(copyMealplan)
+    }
+
     return (
         <Paper variant="outlined" style={{marginBottom:'1em', padding: editMeal ? '1em' : '0'}}>
             {!editMeal &&
@@ -74,6 +88,9 @@ const MealCard = ({meal, index, recipes, mealplan, updateMealplan, date}) => {
                             <Link to={`/recipes/${meal.recipeId}`}>View Recipe</Link>
                             <IconButton onClick={toggleEditMeal}>
                                 <EditIcon />
+                            </IconButton>
+                            <IconButton onClick={handleRemoveMeal}>
+                                <Delete />
                             </IconButton>
                         </div>
                     </AccordionDetails>
