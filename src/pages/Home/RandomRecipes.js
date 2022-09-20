@@ -40,7 +40,7 @@ export default function RandomRecipes() {
         >
           {recipes.map((recipe, i) => {
             return (
-              <Grid key={i} item xs={2} className={styles.recipeCard}>
+              <Grid key={i} item xs={12} md={4} lg={2} className={styles.recipeCard}>
                 <RecipeCard variant='heart' key={recipe.id} recipe={recipe} recipes={recipes} updateRecipes={updateRecipes} />
               </Grid>
             );
