@@ -13,6 +13,7 @@ import {
   Menu,
 } from "@mui/material";
 import RamenDiningIcon from "@mui/icons-material/RamenDining";
+import Logo from "./images/logo.png"
 import Face2Icon from "@mui/icons-material/Face2";
 import { useNavigate } from "react-router-dom";
 
@@ -73,11 +74,18 @@ export default function NavBar() {
   }
 
   return (
-    <AppBar position="static" sx={{color: "primary"}}>
+    <AppBar position="static"  sx={{color: "primary"}}>
       <Container maxwidth="x1">
         <Toolbar disableGutters>
-          <RamenDiningIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          <Box
+          component="img"
+          sx={{
+            height: 50,
+            maxHeight: { md: 75 }, 
+            mr: 2,
+          }}
+          alt="Logo"
+          src={Logo}
           />
           <Typography
             variant="h6"

@@ -81,7 +81,7 @@ const MealCard = ({meal, index, recipes, mealplan, updateMealplan, date}) => {
                     <AccordionDetails>
                         <img className={styles.mealImage} src={meal.imageURL} />
                         <div style={{display:'flex', justifyContent:'space-evenly', alignItems:'center'}}>
-                            <p>{recipe?.prepTime}</p>
+                            <p>{(typeof recipe?.prepTime) === 'number' ? `${recipe?.prepTime} mins` : recipe?.prepTime}</p>
                             <p>{recipe?.calories} kcal.</p>
                         </div>
                         <div style={{display:'flex', justifyContent:'space-evenly', alignItems:'center'}}>
