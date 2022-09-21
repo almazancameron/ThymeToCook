@@ -22,7 +22,7 @@ const RecipeCard = ({ recipe, recipes, updateRecipes, variant = "none" }) => {
     try {
       const copyRecipe = {...recipe, users: recipe.users.filter((u) => u !== currentUser.uid)}
       await updateRecipe(copyRecipe)
-      let copyRecipes = [...recipes].filter((r) => r.id !== recipe.id)
+      let copyRecipes = variant === 'heart' ? [...recipes].map((r) => r.id === recipe.id ? copyRecipe : r): [...recipes].filter((r) => r.id !== recipe.id)
       updateRecipes(copyRecipes) 
     } catch (error) {
       console.log(error)
