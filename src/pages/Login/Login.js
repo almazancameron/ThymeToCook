@@ -84,7 +84,6 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-     <NavBar/>
      <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
